@@ -1,0 +1,238 @@
+<html>
+
+<style>
+	body {
+		font-family: sans-serif;
+	}
+
+	h1{
+		font-style: italic;
+		margin: 0.5em 0 0 0;
+		padding: 0;
+		text-align: center;
+		font-size: 150%;
+	}
+
+	table {
+		border-collapse: collapse;
+	}
+	th, td {
+		border: solid thin black;
+		font-style: italic;
+		padding: 0 0.5em;
+		font-weight: bold;
+	}
+
+	th{
+		text-align: right;
+	}	
+
+	td sub {
+		font-weight: normal;
+		font-size: 66%;
+	}
+	th.rotate{
+		max-width: 1em;
+		padding: 0 0.1em;
+		transform: translate(0, 1.5em) rotate(270deg);
+		border: none;
+	}
+
+
+
+	th.phase { 
+		width: 3em;
+		text-align: center;
+		padding: 0;
+		margin: 0;
+	}
+
+	tr.sum {
+		background-color: silver;		
+	}
+
+	.tech-cost{
+		margin-right: 0.5em;
+	}
+
+</style>
+<body>
+	<h1>Space Empires Production Sheet</h1>
+	<table >
+		<tr>
+			<th class="rotate" rowspan="17">Production</th>
+			<th>Economic Phase</th>
+			<th class="phase">1</th>
+		</tr>
+		<tr>
+			<th>Carry over from last turn</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>+ Colony CPs</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>+ Mineral CPs</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>+ MS Pipeline CPs</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>+ Industrial Center CPs</th>
+			<td></td>
+		</tr>
+		<tr class="sum">
+			<th>Total CP</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>- Maintenance</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>- Turn order bid</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>&le; 15 CP converted to RP</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>Subtotal</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>- Technology spending</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>- Ship spending</th>
+			<td></td>
+		</tr>
+		<tr class="sum">
+			<th>Remaining CP</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>CP spent on upgrades</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>Maint. Increase (buys)</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>Maint. Decrease (losses)</th>
+			<td></td>
+		</tr>
+
+
+		<tr>
+			<th class="rotate" rowspan="6">Research</th>
+			<th>Carry over from last turn</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>+ Research Center RPs</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>&le; 15 CP converted to RP</th>
+			<td></td>
+		</tr>
+		<tr class="sum">
+			<th>Total RP</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>- Technology spending</th>
+			<td></td>
+		</tr>
+		<tr class="sum">
+			<th>Remaining RP</th>
+			<td></td>
+		</tr>
+	</table>
+
+	<h1>Technology Progression &mdash; Circle numbers as technology is purchased</h1>
+	<table>
+		<tr>
+			<th>Tech</th>
+			<th>Start</th>
+			<th></th>
+		</tr>
+		<tr>
+			<td>Ship Size</td>
+			<td>1</td>
+			<td>
+				<span class="tech-cost">2<sub>10</sub></span>
+				<span class="tech-cost">3<sub>15</sub></span>
+				<span class="tech-cost">4<sub>20</sub></span>
+				<span class="tech-cost">5<sub>20</sub></span>
+				<span class="tech-cost">6<sub>25</sub></span>
+				<span class="tech-cost">7<sub>30</sub></span>
+			</td>
+		</tr>
+		<tr>
+			<td>Attack</td>
+			<td>0</td>
+			<td>
+				<span class="tech-cost">1<sub>10</sub></span>
+				<span class="tech-cost">2<sub>20</sub></span>
+				<span class="tech-cost">3<sub>30</sub></span>
+			</td>
+		</tr>
+		<tr>
+			<td>Defense</td>
+			<td>0</td>
+			<td>
+				<span class="tech-cost">1<sub>10</sub></span>
+				<span class="tech-cost">2<sub>20</sub></span>
+				<span class="tech-cost">3<sub>30</sub></span>
+			</td>
+		</tr>
+		<tr>
+			<td>Tactics</td>
+			<td>0</td>
+			<td>
+				<span class="tech-cost">1<sub>15</sub></span>
+				<span class="tech-cost">2<sub>15</sub></span>
+				<span class="tech-cost">3<sub>20</sub></span>
+			</td>
+		</tr>
+		<tr>
+			<td>Move</td>
+			<td>1</td>
+			<td>
+				<span class="tech-cost">2<sub>20</sub></span>
+				<span class="tech-cost">3<sub>25</sub></span>
+				<span class="tech-cost">4<sub>25</sub></span>
+				<span class="tech-cost">5<sub>25</sub></span>
+				<span class="tech-cost">6<sub>20</sub></span>
+				<span class="tech-cost">7<sub>20</sub></span>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>0</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>0</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>0</td>
+			<td></td>
+		</tr>
+	</table>
+
+
+</body>
+
+</html>
