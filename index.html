@@ -1,127 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Space Empires Production Sheet</title>
+	<title>Space Empires Production Sheet Generator</title>
 	<meta charset="utf-8"/>
 
 
-<style type="text/css">
-	body {
-		font-family: sans-serif;
-	}
+	<style type="text/css">
+		body {
+			font-family: sans-serif;
+		}
 
-	h1{
-		font-style: italic;
-		margin: 0.5em 0 0 0;
-		padding: 0;
-		text-align: center;
-		font-size: 150%;
-	}
+		h1{
+			font-style: italic;
+			margin: 0.5em 0 0 0;
+			padding: 0;
+			text-align: center;
+			font-size: 150%;
+		}
 
-	h2{
-		font-style: italic;
-		margin: 0.5em 0 0 0;
-		padding: 0;
-		font-size: 110%;
-	}
+		h2{
+			font-style: italic;
+			margin: 0.5em 0 0 0;
+			padding: 0;
+			font-size: 110%;
+		}
 
-	li {
+		li {
 
-	}
+		}
 
-	table {
-		border-collapse: collapse;
-	}
-	th, td {
-		border: solid thin black;
-		font-style: italic;
-		padding: 0 0.5em;
-		font-weight: bold;
-	}
+		label{
+			cursor: pointer;
+		}
 
-	th{
-		text-align: right;
-	}	
+		table {
+			border-collapse: collapse;
+		}
+		th, td {
+			border: solid thin black;
+			font-style: italic;
+			padding: 0 0.5em;
+			font-weight: bold;
+		}
 
-	td sub {
-		font-weight: normal;
-		font-size: 66%;
-	}
+		th{
+			text-align: right;
+		}	
 
-	th.rotate{
-		max-width: 1em;
-		padding: 0 0.1em;
-		transform: translate(0, 1.5em) rotate(270deg);
-		border: none;
-	}
+		td sub {
+			font-weight: normal;
+			font-size: 66%;
+		}
 
-	th.phase { 
-		width: 3em;
-		text-align: center;
-		padding: 0;
-		margin: 0;
-	}
+		th.rotate{
+			max-width: 1em;
+			padding: 0 0.1em;
+			transform: translate(0, 1.5em) rotate(270deg);
+			border: none;
+		}
 
-	tr.sum {
-		background-color: silver;		
-	}
+		th.phase { 
+			width: 3em;
+			text-align: center;
+			padding: 0;
+			margin: 0;
+		}
 
-	.tech-cost{
-		margin-right: 0.5em;
-	}
+		tr.sum {
+			background-color: #eee;		
+		}
 
-	.miners{
-		font-weight: normal;
-		margin-left: 1em;
-		font-size: 66%;
-	}
+		.tech-cost{
+			margin-right: 0.5em;
+		}
 
-</style>
+		.miners{
+			font-weight: normal;
+			margin-left: 1em;
+			font-size: 66%;
+		}
+
+		@media print {
+			.setup {
+				display:none;
+			}
+		}
+
+	</style>
+	<script type="text/javascript">
+		function setPhaseColumns(columnCount){
+			document.getElementById("phaseColumnCount").innerHTML = columnCount;
+		}
+	</script>
 </head>
 <body>
-	<h1>Select advanced and optional rules</h1>
+	<div class="setup">
 
-	<h2>Page setup</h2>
+		<h1>Select advanced and optional rules</h1>
 
-	<ul>
-		<li>
-			<input type="radio">Portrait
-			<input type="radio">Landscape
-		</li>
-		<li>Economic Phase columns: <input type="text"></li>
-	</ul>
+		<h2>Page setup</h2>
 
-	<h2>Base game</h2>
+		<ul>
+			<li>
+				<label><input name="orientation" type="radio" value="portrait">Portrait</label>
+				<label><input name="orientation" type="radio" value="portrait" checked>Landscape</label>
+			</li>
+			<li>
+				<label>Economic Phase columns: <input type="range" min="10" max="30" value="20" onChange="setPhaseColumns(this.value);" /></label>
+				<span id="phaseColumnCount">20</span>
+			</li>
+			<li><label><input type="checkbox">Show rows for maintenance inrease/decrease</label></li>
+		</ul>
 
-	<ul>
-		<li><input type="checkbox">11. Carriers, Fighters &amp; Point Defense</li>
-		<li><input type="checkbox">12. Raiders: Cloaking and
-Scanners</li>
-		<li><input type="checkbox">13. Mines and Mine Sweepers</li>
-	</ul>
+		<h2>Base game</h2>
 
-	<h2>Close Encounters</h2>
+		<ul>
+			<li><label><input type="checkbox">11. Carriers, Fighters &amp; Point Defense</label></li>
+			<li><label><input type="checkbox">12. Raiders: Cloaking and
+	Scanners</label></li>
+			<li><label><input type="checkbox">13. Mines and Mine Sweepers</label></li>
+		</ul>
 
-	<ul>
-		<li><input type="checkbox">3. Ship Experience and Military
-Academies</li>
-		<li><input type="checkbox">4. Boarding and Capturing Ships</li>
-		<li><input type="checkbox">5. Security Forces</li>
-		<li><input type="checkbox">6. Titans</li>
-		<li><input type="checkbox">8. Mine Sweeper Technology</li>
-		<li><input type="checkbox">9. Movement Technology</li>
-		<li><input type="checkbox">10. Reaction Movement</li>
-		<li><input type="checkbox">11. Fast Battlecruisers</li>
-		<li><input type="checkbox">14. Transports and Ground Combat</li>
-		<li><input type="checkbox">16. Flagships</li>
-		<li><input type="checkbox">17. Research and Industrial Centers</li>
-		<li><input type="checkbox">18. Terraforming Nebulae</li>
-		<li><input type="checkbox">19. Unique Ships</li>
-		<li><input type="checkbox">20. Slow Scientists</li>
-		<li><input type="checkbox">20. Smart Scientists</li>
-		<li><input type="checkbox">20. Bloody Combat</li>
-	</ul>
+		<h2>Close Encounters</h2>
 
+		<ul>
+			<li><label><input type="checkbox">3. Ship Experience and Military
+	Academies</label></li>
+			<li><label><input type="checkbox">4. Boarding and Capturing Ships</label></li>
+			<li><label><input type="checkbox">5. Security Forces</label></li>
+			<li><label><input type="checkbox">6. Titans</label></li>
+			<li><label><input type="checkbox">8. Mine Sweeper Technology</label></li>
+			<li><label><input type="checkbox">9. Movement Technology</label></li>
+			<li><label><input type="checkbox">10. Reaction Movement</label></li>
+			<li><label><input type="checkbox">11. Fast Battlecruisers</label></li>
+			<li><label><input type="checkbox">14. Transports and Ground Combat</label></li>
+			<li><label><input type="checkbox">16. Flagships</label></li>
+			<li><label><input type="checkbox">17. Research and Industrial Centers</label></li>
+			<li><label><input type="checkbox">18. Terraforming Nebulae</label></li>
+			<li><label><input type="checkbox">19. Unique Ships</label></li>
+			<li><label><input type="checkbox">20. Slow Scientists</label></li>
+			<li><label><input type="checkbox">20. Smart Scientists</label></li>
+			<li><label><input type="checkbox">20. Bloody Combat</label></li>
+		</ul>
+	</div>
 	<h1>Space Empires Production Sheet</h1>
 	<table >
 		<tr>
