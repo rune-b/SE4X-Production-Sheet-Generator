@@ -52,15 +52,19 @@
 			font-size: 66%;
 		}
 
-		th.rotate{
+		th.group{
 			max-width: 1em;
 			padding: 0 0.1em;
 			transform: translate(0, 1.5em) rotate(270deg);
 			border: none;
 		}
 
+		th.description{
+
+		}
+
 		th.phase { 
-			width: 3em;
+			width: 2em;
 			text-align: center;
 			padding: 0;
 			margin: 0;
@@ -88,12 +92,55 @@
 
 	</style>
 	<script type="text/javascript">
-		function setPhaseColumns(columnCount){
+
+		var firstPhaseColumn = 2;
+
+		function init()
+		{
+			setPhaseColumns(20);
+		}
+
+		function setPhaseColumns(columnCount)
+		{
 			document.getElementById("phaseColumnCount").innerHTML = columnCount;
+			var sheet = document.getElementById("productionSheet");
+			var currentPhaseCount = sheet.rows[0].cells.length - firstPhaseColumn;
+
+			if (columnCount != currentPhaseCount)
+			{
+				for (var i = 0; i < sheet.rows.length; i++)
+				{
+					var row = sheet.rows[i];
+
+					if (columnCount > currentPhaseCount){
+						for (var c = currentPhaseCount + 1; c <= columnCount; c++)
+						{
+							if (i == 0) {
+								var th = document.createElement("th");
+								th.className = "phase";
+								th.innerHTML = c;
+								row.appendChild(th);
+							}
+							else{
+								row.insertCell(-1);
+							}
+						}
+					}
+
+					if (columnCount < currentPhaseCount)
+					{
+						for (var c = currentPhaseCount; c > columnCount; c--)
+						{
+							row.deleteCell(row.cells.length - 1);
+						}
+					}				
+				}
+			}
+
 		}
 	</script>
 </head>
-<body>
+<body onload="init()">
 	<div class="setup">
 
 		<h1>Select advanced and optional rules</h1>
@@ -106,10 +153,12 @@
 				<label><input name="orientation" type="radio" value="portrait" checked>Landscape</label>
 			</li>
 			<li>
-				<label>Economic Phase columns: <input type="range" min="10" max="30" value="20" onChange="setPhaseColumns(this.value);" /></label>
-				<span id="phaseColumnCount">20</span>
+				<label>Economic Phase columns: <input type="range" id="phaseColumns" min="10" max="30" value="20" oninput="setPhaseColumns(parseInt(value));" /></label>
+				<output for="phaseColumns" id="phaseColumnCount">20</output>
 			</li>
-			<li><label><input type="checkbox">Show rows for maintenance inrease/decrease</label></li>
+			<li>
+				<label><input type="checkbox">Show rows for maintenance inrease/decrease</label>
+			</li>
 		</ul>
 
 		<h2>Base game</h2>
@@ -144,10 +193,10 @@
 		</ul>
 	</div>
 	<h1>Space Empires Production Sheet</h1>
-	<table >
+	<table id="productionSheet">
 		<tr>
-			<th class="rotate" rowspan="17">Production</th>
-			<th>Economic Phase</th>
+			<th class="group" rowspan="17">Production</th>
+			<th class="description">Economic Phase</th>
 			<th class="phase">1</th>
 		</tr>
 		<tr>
@@ -217,7 +266,7 @@
 
 
 		<tr>
-			<th class="rotate" rowspan="6">Research</th>
+			<th class="group" rowspan="6">Research</th>
 			<th>Carry over from last turn</th>
 			<td></td>
 		</tr>
