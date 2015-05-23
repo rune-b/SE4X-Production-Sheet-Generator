@@ -8,6 +8,7 @@
 	<style type="text/css">
 		body {
 			font-family: sans-serif;
+			font-size: 10pt;
 		}
 
 		h1{
@@ -35,7 +36,12 @@
 
 		table {
 			border-collapse: collapse;
+			border: solid thick black;
+			width: 100%;
 		}
+		tbody{
+		}
+
 		th, td {
 			border: solid thin black;
 			font-style: italic;
@@ -53,25 +59,51 @@
 		}
 
 		th.group{
+			width: 1em;
 			max-width: 1em;
 			padding: 0 0.1em;
 			transform: translate(0, 1.5em) rotate(270deg);
-			border: none;
+			/*border: none;*/
 		}
 
 		th.description{
+			width: 12em;
 
 		}
 
+		thead th{
+			border-bottom-width: medium;
+		}
+
+		th:nth-of-type(1)
+		{
+			border-right-width: medium;
+		}
+
 		th.phase { 
-			width: 2em;
+			/*width: 2em;*/
 			text-align: center;
 			padding: 0;
 			margin: 0;
 		}
 
+		tr.divider td{
+			height: 0.4em;
+			border-top-width: thick;
+			border-bottom-width: thick;
+			border-right: none;
+			border-left: none;
+		}
 		tr.sum {
 			background-color: #eee;		
+		}
+
+		tr.sum th{
+			text-align: left;
+		}
+
+		tbody.research{
+			margin-top: 1em;
 		}
 
 		.tech-cost{
@@ -88,16 +120,28 @@
 			.setup {
 				display:none;
 			}
+
+			body{
+				margin: 0;
+				padding: 0;
+
+			}
+
+			h1{
+				margin-top:0;
+				padding-top: 0;
+			}
 		}
 
 	</style>
 	<script type="text/javascript">
 
-		var firstPhaseColumn = 2;
+		var firstPhaseColumn = 1;
 
 		function init()
 		{
 			setPhaseColumns(20);
+			document.getElementById("phaseColumns").value = 20;
 		}
 
 		function setPhaseColumns(columnCount)
@@ -153,17 +197,21 @@
 				<label><input name="orientation" type="radio" value="portrait" checked>Landscape</label>
 			</li>
 			<li>
-				<label>Economic Phase columns: <input type="range" id="phaseColumns" min="10" max="30" value="20" oninput="setPhaseColumns(parseInt(value));" /></label>
-				<output for="phaseColumns" id="phaseColumnCount">20</output>
+				<label>Economic Phase columns: <input type="range" id="phaseColumns" min="10" max="30" oninput="setPhaseColumns(parseInt(value));" /></label>
+				<output for="phaseColumns" id="phaseColumnCount"></output>
 			</li>
 			<li>
 				<label><input type="checkbox">Show rows for maintenance inrease/decrease</label>
+			</li>
+			<li>
+				<label><input type="checkbox">Combine ship and technology spending</label>
 			</li>
 		</ul>
 
 		<h2>Base game</h2>
 
 		<ul>
+			<li><label><input type="checkbox">10. Merchant Ship Pipelines</label></li>
 			<li><label><input type="checkbox">11. Carriers, Fighters &amp; Point Defense</label></li>
 			<li><label><input type="checkbox">12. Raiders: Cloaking and
 	Scanners</label></li>
@@ -194,102 +242,110 @@
 	</div>
 	<h1>Space Empires Production Sheet</h1>
 	<table id="productionSheet">
-		<tr>
-			<th class="group" rowspan="17">Production</th>
-			<th class="description">Economic Phase</th>
-			<th class="phase">1</th>
-		</tr>
-		<tr>
-			<th>Carry over from last turn</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>+ Colony CPs</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>+ Mineral CPs</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>+ MS Pipeline CPs</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>+ Industrial Center CPs</th>
-			<td></td>
-		</tr>
-		<tr class="sum">
-			<th>Total CP</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>- Maintenance</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>- Turn order bid</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>&le; 15 CP converted to RP</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>Subtotal</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>- Technology spending</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>- Ship spending</th>
-			<td></td>
-		</tr>
-		<tr class="sum">
-			<th>Remaining CP</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>CP spent on upgrades</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>Maint. Increase (buys)</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>Maint. Decrease (losses)</th>
-			<td></td>
-		</tr>
-
-
-		<tr>
-			<th class="group" rowspan="6">Research</th>
-			<th>Carry over from last turn</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>+ Research Center RPs</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>&le; 15 CP converted to RP</th>
-			<td></td>
-		</tr>
-		<tr class="sum">
-			<th>Total RP</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>- Technology spending</th>
-			<td></td>
-		</tr>
-		<tr class="sum">
-			<th>Remaining RP</th>
-			<td></td>
-		</tr>
+		<thead>
+			<tr>
+				<!--<th class="group" rowspan="17">Production</th>-->
+				<th class="description">Economic Phase</th>
+				<th class="phase">1</th>
+			</tr>
+		</thead>
+		<tbody class="production">
+			<tr>
+				<th>Carry over from last turn</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>+ Colony CPs</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>+ Mineral CPs</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>+ MS Pipeline CPs</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>+ Industrial Center CPs</th>
+				<td></td>
+			</tr>
+			<tr class="sum">
+				<th>Total CP</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>- Maintenance</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>- Turn order bid</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>&le; 15 CP converted to RP</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>Subtotal</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>- Technology spending</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>- Ship spending</th>
+				<td></td>
+			</tr>
+			<tr class="sum">
+				<th>Remaining CP</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>CP spent on upgrades</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>Maint. Increase (buys)</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>Maint. Decrease (losses)</th>
+				<td></td>
+			</tr>
+		</tbody>
+		<tbody class="research">
+			<tr class="divider">
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<!--<th class="group" rowspan="6">Research</th>-->
+				<th>Carry over from last turn</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>+ Research Center RPs</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>&le; 15 CP converted to RP</th>
+				<td></td>
+			</tr>
+			<tr class="sum">
+				<th>Total RP</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>- Technology spending</th>
+				<td></td>
+			</tr>
+			<tr class="sum">
+				<th>Remaining RP</th>
+				<td></td>
+			</tr>
+		</tbody>
 	</table>
 
 	<h1>Technology Progression &mdash; Circle numbers as technology is purchased</h1>
