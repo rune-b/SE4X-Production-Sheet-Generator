@@ -36,8 +36,21 @@
 
 		table {
 			border-collapse: collapse;
+		}
+
+		table#productionSheet{
 			width: 100%;
 		}
+
+		table.technologyProgression{
+			width: 33%;
+			float: left;
+			/*margin-right: 1em;*/
+		}
+		table.technologyProgression td{			
+			height: 1em;
+		}
+
 		tbody{
 			border-left: solid thick black;
 			border-right: solid thick black;
@@ -55,7 +68,8 @@
 			text-align: right;
 		}	
 
-		td sub {
+		td sub,
+		th sub {
 			font-weight: normal;
 			font-size: 66%;
 		}
@@ -190,6 +204,10 @@
 			}
 		}
 
+		function saveSettings(){
+			//TODO
+		}
+
 		function inputClicked()
 		{
 			if (this.type == "checkbox")
@@ -306,28 +324,27 @@
 
 		<ul>
 			<li><label><input type="checkbox" id="msPipelines">10. Merchant Ship Pipelines</label></li>
-			<li><label><input type="checkbox" disabled>11. Carriers, Fighters &amp; Point Defense</label></li>
-			<li><label><input type="checkbox" disabled>12. Raiders: Cloaking and
-	Scanners</label></li>
-			<li><label><input type="checkbox" disabled>13. Mines and Mine Sweepers</label></li>
+			<li><label><input type="checkbox" id="carriers">11. Carriers, Fighters &amp; Point Defense</label></li>
+			<li><label><input type="checkbox" id="cloaking">12. Raiders: Cloaking and Scanners</label></li>
+			<li><label><input type="checkbox" id="mines">13. Mines and Mine Sweepers</label></li>
 		</ul>
 
 		<h2>Close Encounters</h2>
 
 		<ul>
 			<li><label><input type="checkbox" id="reducedTechCosts" disabled>2. Reduced technology costs</label></li>
-			<li><label><input type="checkbox" id="experience" disabled>3. Ship Experience and Military Academies</label></li>
-			<li><label><input type="checkbox" disabled>4. Boarding and Capturing Ships</label></li>
-			<li><label><input type="checkbox" disabled>5. Security Forces</label></li>
-			<li><label><input type="checkbox" disabled>6. Titans</label></li>
+			<li><label><input type="checkbox" id="experience">3. Ship Experience and Military Academies</label></li>
+			<li><label><input type="checkbox" id="boarding">4. Boarding and Capturing Ships</label></li>
+			<li><label><input type="checkbox" id="security">5. Security Forces</label></li>
+			<li><label><input type="checkbox" id="titans">6. Titans</label></li>
 			<li><label><input type="checkbox" disabled>8. Mine Sweeper Technology</label></li>
-			<li><label><input type="checkbox" disabled>9. Movement Technology</label></li>
+			<li><label><input type="checkbox" id="movement">9. Movement Technology</label></li>
 			<li><label><input type="checkbox" disabled>10. Reaction Movement</label></li>
-			<li><label><input type="checkbox" disabled>11. Fast Battlecruisers</label></li>
-			<li><label><input type="checkbox" disabled>14. Transports and Ground Combat</label></li>
+			<li><label><input type="checkbox" id="fastBC">11. Fast Battlecruisers</label></li>
+			<li><label><input type="checkbox" id="groundCombat">14. Transports and Ground Combat</label></li>
 			<li><label><input type="checkbox" disabled>16. Flagships</label></li>
 			<li><label><input type="checkbox" id="researchCenters">17. Research and Industrial Centers</label></li>
-			<li><label><input type="checkbox" disabled>18. Terraforming Nebulae</label></li>
+			<li><label><input type="checkbox" id="terraformingNebulae">18. Terraforming Nebulae</label></li>
 			<li><label><input type="checkbox" disabled>19. Unique Ships</label></li>
 			<li><label><input type="checkbox" disabled>20. Slow Scientists</label></li>
 			<li><label><input type="checkbox" disabled>20. Smart Scientists</label></li>
@@ -457,7 +474,7 @@
 			<tr>
 				<th>Tech</th>
 				<th>Start</th>
-				<th></th>
+				<th>Level<sub>Cost</sub></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -470,7 +487,7 @@
 					<span class="tech-cost">4<sub>20</sub></span>
 					<span class="tech-cost">5<sub>20</sub></span>
 					<span class="tech-cost">6<sub>25</sub></span>
-					<span class="tech-cost">7<sub>30</sub></span>
+					<span class="tech-cost enable_titans">7<sub>30</sub></span>
 				</td>
 			</tr>
 			<tr>
@@ -509,7 +526,7 @@
 					<span class="tech-cost">4<sub>25</sub></span>
 					<span class="tech-cost">5<sub>25</sub></span>
 					<span class="tech-cost">6<sub>20</sub></span>
-					<span class="tech-cost">7<sub>20</sub></span>
+					<span class="tech-cost enable_movement">7<sub>20</sub></span>
 				</td>
 			</tr>
 			<tr>
@@ -520,7 +537,7 @@
 					<span class="tech-cost">3<sub>30</sub></span>
 				</td>
 			</tr>
-			<tr>
+			<tr class="enable_groundCombat">
 				<td>Ground</td>
 				<td>1</td>
 				<td>
@@ -528,7 +545,17 @@
 					<span class="tech-cost">3<sub>15</sub></span>
 				</td>
 			</tr>
+		</table>
+		<table class="technologyProgression">
+		<thead>
 			<tr>
+				<th>Tech</th>
+				<th>Start</th>
+				<th>Level<sub>Cost</sub></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="enable_carriers">
 				<td>Fighters</td>
 				<td>0</td>
 				<td>
@@ -537,7 +564,7 @@
 					<span class="tech-cost">3<sub>40</sub></span>
 				</td>
 			</tr>
-			<tr>
+			<tr class="enable_carriers">
 				<td>Point Def.</td>
 				<td>0</td>
 				<td>
@@ -551,11 +578,11 @@
 				<td>0</td>
 				<td>
 					<span class="tech-cost">1<sub>20</sub></span>
-					<span class="tech-cost">2<sub>35</sub></span>
-					<span class="miners">1 2 3 4</span>
+					<span class="tech-cost enable_terraformingNebulae">2<sub>35</sub></span>
+					<span class="miners enable_terraformingNebulae">1 2 3 4</span>
 				</td>
 			</tr>
-			<tr>
+			<tr class="enable_cloaking">
 				<td>Cloaking</td>
 				<td>0</td>
 				<td>
@@ -563,7 +590,7 @@
 					<span class="tech-cost">2<sub>40</sub></span>
 				</td>
 			</tr>
-			<tr>
+			<tr class="enable_cloaking">
 				<td>Scanners</td>
 				<td>0</td>
 				<td>
@@ -571,14 +598,14 @@
 					<span class="tech-cost">2<sub>30</sub></span>
 				</td>
 			</tr>
-			<tr>
+			<tr class="enable_mines">
 				<td>Mines</td>
 				<td>0</td>
 				<td>
 					<span class="tech-cost">1<sub>30</sub></span>
 				</td>
 			</tr>
-			<tr>
+			<tr class="enable_mines">
 				<td>Mine Sweeper</td>
 				<td>0</td>
 				<td>
@@ -587,7 +614,17 @@
 					<span class="tech-cost">3<sub>20</sub></span>
 				</td>
 			</tr>
+		</table>
+		<table class="technologyProgression">
+		<thead>
 			<tr>
+				<th>Tech</th>
+				<th>Start</th>
+				<th>Level<sub>Cost</sub></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="enable_experience">
 				<td>Military Acad.</td>
 				<td>0</td>
 				<td>
@@ -595,7 +632,7 @@
 					<span class="tech-cost">2<sub>20</sub></span>
 				</td>
 			</tr>
-			<tr>
+			<tr class="enable_boarding">
 				<td>Boarding</td>
 				<td>0</td>
 				<td>
@@ -603,7 +640,7 @@
 					<span class="tech-cost">2<sub>25</sub></span>
 				</td>
 			</tr>
-			<tr>
+			<tr class="enable_security">
 				<td>Security</td>
 				<td>0</td>
 				<td>
@@ -612,6 +649,14 @@
 				</td>
 			</tr>
 			<tr>
+				<td>Exploration</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>15</sub></span>
+					<span class="tech-cost">2<sub>15</sub></span>
+				</td>
+			</tr>
+			<tr class="enable_fastBC">
 				<td>Fast BC</td>
 				<td>0</td>
 				<td>
