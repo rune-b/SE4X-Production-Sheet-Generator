@@ -36,10 +36,12 @@
 
 		table {
 			border-collapse: collapse;
-			border: solid thick black;
 			width: 100%;
 		}
 		tbody{
+			border-left: solid thick black;
+			border-right: solid thick black;
+			border-bottom: solid thick black;
 		}
 
 		th, td {
@@ -63,42 +65,55 @@
 			max-width: 1em;
 			padding: 0 0.1em;
 			transform: translate(0, 1.5em) rotate(270deg);
-			/*border: none;*/
 		}
 
 		th.description{
-			width: 12em;
-
+			width: 11em;
 		}
 
-		thead th{
+		thead{
+			border: solid thick black;
 			border-bottom-width: medium;
+			font-size: 110%;
 		}
 
-		th:nth-of-type(1)
+		th:nth-of-type(1),
+		table.technologyProgression td,
+		table.technologyProgression th
 		{
 			border-right-width: medium;
 		}
 
+		table.technologyProgression th,
+		table.technologyProgression td:nth-of-type(2){
+			text-align: center;
+		}
+
 		th.phase { 
-			/*width: 2em;*/
 			text-align: center;
 			padding: 0;
 			margin: 0;
 		}
 
-		tr.divider td{
-			height: 0.4em;
-			border-top-width: thick;
-			border-bottom-width: thick;
+		tbody.divider{
 			border-right: none;
 			border-left: none;
+		}
+
+		tbody.divider tr td{
+			height: 0.4em;
+			border: none;
 		}
 		tr.sum {
 			background-color: #eee;		
 		}
 
-		tr.sum th{
+		tr.header th{
+			text-align: left;
+			font-size: 110%;
+		}
+
+		tr.carry-over th{
 			text-align: left;
 		}
 
@@ -117,7 +132,7 @@
 		}
 
 		@media print {
-			.setup {
+			#setup {
 				display:none;
 			}
 
@@ -127,7 +142,7 @@
 
 			}
 
-			h1{
+			h1:nth-of-type(1){
 				margin-top:0;
 				padding-top: 0;
 			}
@@ -141,7 +156,47 @@
 		function init()
 		{
 			setPhaseColumns(20);
-			document.getElementById("phaseColumns").value = 20;
+			var phaseColumnsSlider = document.getElementById("phaseColumns");
+			phaseColumnsSlider.value = 20;
+
+			var setup = document.getElementById("setup");
+			var inputs = setup.getElementsByTagName("input");
+
+			loadSettings(inputs);
+
+			// Event handlers
+			for (var i = 0; i < inputs.length; i++)
+			{
+				var input = inputs[i];
+				if (input.id)
+				{
+					input.addEventListener("click", inputClicked); 
+				}
+			}
+
+			
+			phaseColumnsSlider.addEventListener("input", function() 
+			{ 
+				setPhaseColumns(parseInt(phaseColumnsSlider.value)); 
+			});
+
+		}
+
+		function loadSettings(inputs) 
+		{
+			for (var i = 0; i < inputs.length; i++)
+			{
+				inputClicked.call(inputs[i]);
+			}
+		}
+
+		function inputClicked()
+		{
+			if (this.type == "checkbox")
+			{
+				toggleClass("enable_" + this.id, this.checked);
+				toggleClass("disable_" + this.id, !this.checked);
+			}
 		}
 
 		function setPhaseColumns(columnCount)
@@ -180,12 +235,54 @@
 					}				
 				}
 			}
+		}
 
+		function toggleClass(className, visible)
+		{
+			var ruleSelector = "." + className;
+
+			if (!visible)
+			{
+				var rule = getStyleRule(ruleSelector);
+				if (rule === null) 
+				{
+					document.styleSheets[0].insertRule(ruleSelector + " { display: none; }", 0);
+				}
+			}
+			else
+			{
+				deleteStyleRule(ruleSelector);
+			}
+		}
+
+		function deleteStyleRule(selector)
+		{
+			var rules = document.styleSheets[0].cssRules;
+			for (var i = 0; i < rules.length; i++)
+			{
+				if (rules[i].selectorText == selector)
+				{
+					document.styleSheets[0].deleteRule(i);
+					return true;
+				}
+			}
+			return false;
+		}
+
+		function getStyleRule(selector)
+		{
+			var rules = document.styleSheets[0].cssRules;
+			for (var i = 0; i < rules.length; i++)
+			{
+				if (rules[i].selectorText == selector)
+					return rules[i];
+			}
+			return null;
 		}
 	</script>
 </head>
 <body onload="init()">
-	<div class="setup">
+	<div id="setup">
 
 		<h1>Select advanced and optional rules</h1>
 
@@ -193,51 +290,48 @@
 
 		<ul>
 			<li>
-				<label><input name="orientation" type="radio" value="portrait">Portrait</label>
-				<label><input name="orientation" type="radio" value="portrait" checked>Landscape</label>
+				<label><input id="orientationPortrait" name="orientation" type="radio" value="portrait">Portrait</label>
+				<label><input id="orientationLandscape" name="orientation" type="radio" value="portrait" checked>Landscape</label>
 			</li>
 			<li>
-				<label>Economic Phase columns: <input type="range" id="phaseColumns" min="10" max="30" oninput="setPhaseColumns(parseInt(value));" /></label>
+				<label>Economic Phase columns: <input type="range" id="phaseColumns" min="10" max="30" /></label>
 				<output for="phaseColumns" id="phaseColumnCount"></output>
 			</li>
 			<li>
-				<label><input type="checkbox">Show rows for maintenance inrease/decrease</label>
-			</li>
-			<li>
-				<label><input type="checkbox">Combine ship and technology spending</label>
+				<label><input type="checkbox" id="maintenanceChanges">Show rows for maintenance inrease/decrease</label>
 			</li>
 		</ul>
 
 		<h2>Base game</h2>
 
 		<ul>
-			<li><label><input type="checkbox">10. Merchant Ship Pipelines</label></li>
-			<li><label><input type="checkbox">11. Carriers, Fighters &amp; Point Defense</label></li>
-			<li><label><input type="checkbox">12. Raiders: Cloaking and
+			<li><label><input type="checkbox" id="msPipelines">10. Merchant Ship Pipelines</label></li>
+			<li><label><input type="checkbox" disabled>11. Carriers, Fighters &amp; Point Defense</label></li>
+			<li><label><input type="checkbox" disabled>12. Raiders: Cloaking and
 	Scanners</label></li>
-			<li><label><input type="checkbox">13. Mines and Mine Sweepers</label></li>
+			<li><label><input type="checkbox" disabled>13. Mines and Mine Sweepers</label></li>
 		</ul>
 
 		<h2>Close Encounters</h2>
 
 		<ul>
-			<li><label><input type="checkbox">3. Ship Experience and Military
-	Academies</label></li>
-			<li><label><input type="checkbox">4. Boarding and Capturing Ships</label></li>
-			<li><label><input type="checkbox">5. Security Forces</label></li>
-			<li><label><input type="checkbox">6. Titans</label></li>
-			<li><label><input type="checkbox">8. Mine Sweeper Technology</label></li>
-			<li><label><input type="checkbox">9. Movement Technology</label></li>
-			<li><label><input type="checkbox">10. Reaction Movement</label></li>
-			<li><label><input type="checkbox">11. Fast Battlecruisers</label></li>
-			<li><label><input type="checkbox">14. Transports and Ground Combat</label></li>
-			<li><label><input type="checkbox">16. Flagships</label></li>
-			<li><label><input type="checkbox">17. Research and Industrial Centers</label></li>
-			<li><label><input type="checkbox">18. Terraforming Nebulae</label></li>
-			<li><label><input type="checkbox">19. Unique Ships</label></li>
-			<li><label><input type="checkbox">20. Slow Scientists</label></li>
-			<li><label><input type="checkbox">20. Smart Scientists</label></li>
-			<li><label><input type="checkbox">20. Bloody Combat</label></li>
+			<li><label><input type="checkbox" id="reducedTechCosts" disabled>2. Reduced technology costs</label></li>
+			<li><label><input type="checkbox" id="experience" disabled>3. Ship Experience and Military Academies</label></li>
+			<li><label><input type="checkbox" disabled>4. Boarding and Capturing Ships</label></li>
+			<li><label><input type="checkbox" disabled>5. Security Forces</label></li>
+			<li><label><input type="checkbox" disabled>6. Titans</label></li>
+			<li><label><input type="checkbox" disabled>8. Mine Sweeper Technology</label></li>
+			<li><label><input type="checkbox" disabled>9. Movement Technology</label></li>
+			<li><label><input type="checkbox" disabled>10. Reaction Movement</label></li>
+			<li><label><input type="checkbox" disabled>11. Fast Battlecruisers</label></li>
+			<li><label><input type="checkbox" disabled>14. Transports and Ground Combat</label></li>
+			<li><label><input type="checkbox" disabled>16. Flagships</label></li>
+			<li><label><input type="checkbox" id="researchCenters">17. Research and Industrial Centers</label></li>
+			<li><label><input type="checkbox" disabled>18. Terraforming Nebulae</label></li>
+			<li><label><input type="checkbox" disabled>19. Unique Ships</label></li>
+			<li><label><input type="checkbox" disabled>20. Slow Scientists</label></li>
+			<li><label><input type="checkbox" disabled>20. Smart Scientists</label></li>
+			<li><label><input type="checkbox" disabled>20. Bloody Combat</label></li>
 		</ul>
 	</div>
 	<h1>Space Empires Production Sheet</h1>
@@ -250,7 +344,7 @@
 			</tr>
 		</thead>
 		<tbody class="production">
-			<tr>
+			<tr class="carry-over">
 				<th>Carry over from last turn</th>
 				<td></td>
 			</tr>
@@ -262,15 +356,15 @@
 				<th>+ Mineral CPs</th>
 				<td></td>
 			</tr>
-			<tr>
+			<tr class="enable_msPipelines">
 				<th>+ MS Pipeline CPs</th>
 				<td></td>
 			</tr>
-			<tr>
+			<tr class="enable_researchCenters">
 				<th>+ Industrial Center CPs</th>
 				<td></td>
 			</tr>
-			<tr class="sum">
+			<tr class="sum header">
 				<th>Total CP</th>
 				<td></td>
 			</tr>
@@ -282,23 +376,27 @@
 				<th>- Turn order bid</th>
 				<td></td>
 			</tr>
-			<tr>
+			<tr class="enable_researchCenters">
 				<th>&le; 15 CP converted to RP</th>
 				<td></td>
 			</tr>
-			<tr>
+			<tr class="header">
 				<th>Subtotal</th>
 				<td></td>
 			</tr>
-			<tr>
+			<tr class="disable_researchCenters">
 				<th>- Technology spending</th>
 				<td></td>
 			</tr>
-			<tr>
+			<tr class="disable_researchCenters">
 				<th>- Ship spending</th>
 				<td></td>
 			</tr>
-			<tr class="sum">
+			<tr class="enable_researchCenters">
+				<th>- Purchases</th>
+				<td></td>
+			</tr>
+			<tr class="sum header">
 				<th>Remaining CP</th>
 				<td></td>
 			</tr>
@@ -306,21 +404,26 @@
 				<th>CP spent on upgrades</th>
 				<td></td>
 			</tr>
-			<tr>
+			<tr class="enable_maintenanceChanges">
 				<th>Maint. Increase (buys)</th>
 				<td></td>
 			</tr>
-			<tr>
+			<tr class="enable_maintenanceChanges">
 				<th>Maint. Decrease (losses)</th>
 				<td></td>
 			</tr>
 		</tbody>
-		<tbody class="research">
-			<tr class="divider">
+
+		<tbody class="divider enable_researchCenters">
+			<tr>
 				<td></td>
 				<td></td>
 			</tr>
-			<tr>
+		</tbody>
+
+		<tbody class="research enable_researchCenters">
+			
+			<tr class="carry-over">
 				<!--<th class="group" rowspan="6">Research</th>-->
 				<th>Carry over from last turn</th>
 				<td></td>
@@ -333,7 +436,7 @@
 				<th>&le; 15 CP converted to RP</th>
 				<td></td>
 			</tr>
-			<tr class="sum">
+			<tr class="sum header">
 				<th>Total RP</th>
 				<td></td>
 			</tr>
@@ -341,7 +444,7 @@
 				<th>- Technology spending</th>
 				<td></td>
 			</tr>
-			<tr class="sum">
+			<tr class="sum header">
 				<th>Remaining RP</th>
 				<td></td>
 			</tr>
@@ -349,169 +452,173 @@
 	</table>
 
 	<h1>Technology Progression &mdash; Circle numbers as technology is purchased</h1>
-	<table>
-		<tr>
-			<th>Tech</th>
-			<th>Start</th>
-			<th></th>
-		</tr>
-		<tr>
-			<td>Ship Size</td>
-			<td>1</td>
-			<td>
-				<span class="tech-cost">2<sub>10</sub></span>
-				<span class="tech-cost">3<sub>15</sub></span>
-				<span class="tech-cost">4<sub>20</sub></span>
-				<span class="tech-cost">5<sub>20</sub></span>
-				<span class="tech-cost">6<sub>25</sub></span>
-				<span class="tech-cost">7<sub>30</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Attack</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>10</sub></span>
-				<span class="tech-cost">2<sub>20</sub></span>
-				<span class="tech-cost">3<sub>30</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Defense</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>10</sub></span>
-				<span class="tech-cost">2<sub>20</sub></span>
-				<span class="tech-cost">3<sub>30</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Tactics</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>15</sub></span>
-				<span class="tech-cost">2<sub>15</sub></span>
-				<span class="tech-cost">3<sub>20</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Move</td>
-			<td>1</td>
-			<td>
-				<span class="tech-cost">2<sub>20</sub></span>
-				<span class="tech-cost">3<sub>25</sub></span>
-				<span class="tech-cost">4<sub>25</sub></span>
-				<span class="tech-cost">5<sub>25</sub></span>
-				<span class="tech-cost">6<sub>20</sub></span>
-				<span class="tech-cost">7<sub>20</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Ship Yard</td>
-			<td>1</td>
-			<td>
-				<span class="tech-cost">2<sub>20</sub></span>
-				<span class="tech-cost">3<sub>30</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Ground</td>
-			<td>1</td>
-			<td>
-				<span class="tech-cost">2<sub>10</sub></span>
-				<span class="tech-cost">3<sub>15</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Fighters</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>25</sub></span>
-				<span class="tech-cost">2<sub>30</sub></span>
-				<span class="tech-cost">3<sub>40</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Point Def.</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>20</sub></span>
-				<span class="tech-cost">2<sub>25</sub></span>
-				<span class="tech-cost">3<sub>30</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Terraforming</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>20</sub></span>
-				<span class="tech-cost">2<sub>35</sub></span>
-				<span class="miners">1 2 3 4</span>
-			</td>
-		</tr>
-		<tr>
-			<td>Cloaking</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>30</sub></span>
-				<span class="tech-cost">2<sub>40</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Scanners</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>20</sub></span>
-				<span class="tech-cost">2<sub>30</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Mines</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>30</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Mine Sweeper</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>10</sub></span>
-				<span class="tech-cost">2<sub>15</sub></span>
-				<span class="tech-cost">3<sub>20</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Military Acad.</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>10</sub></span>
-				<span class="tech-cost">2<sub>20</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Boarding</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>20</sub></span>
-				<span class="tech-cost">2<sub>25</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Security</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>15</sub></span>
-				<span class="tech-cost">2<sub>15</sub></span>
-			</td>
-		</tr>
-		<tr>
-			<td>Fast BC</td>
-			<td>0</td>
-			<td>
-				<span class="tech-cost">1<sub>10</sub></span>
-			</td>
-		</tr>
+	<table class="technologyProgression">
+		<thead>
+			<tr>
+				<th>Tech</th>
+				<th>Start</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Ship Size</td>
+				<td>1</td>
+				<td>
+					<span class="tech-cost">2<sub>10</sub></span>
+					<span class="tech-cost">3<sub>15</sub></span>
+					<span class="tech-cost">4<sub>20</sub></span>
+					<span class="tech-cost">5<sub>20</sub></span>
+					<span class="tech-cost">6<sub>25</sub></span>
+					<span class="tech-cost">7<sub>30</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Attack</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>10</sub></span>
+					<span class="tech-cost">2<sub>20</sub></span>
+					<span class="tech-cost">3<sub>30</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Defense</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>10</sub></span>
+					<span class="tech-cost">2<sub>20</sub></span>
+					<span class="tech-cost">3<sub>30</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Tactics</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>15</sub></span>
+					<span class="tech-cost">2<sub>15</sub></span>
+					<span class="tech-cost">3<sub>20</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Move</td>
+				<td>1</td>
+				<td>
+					<span class="tech-cost">2<sub>20</sub></span>
+					<span class="tech-cost">3<sub>25</sub></span>
+					<span class="tech-cost">4<sub>25</sub></span>
+					<span class="tech-cost">5<sub>25</sub></span>
+					<span class="tech-cost">6<sub>20</sub></span>
+					<span class="tech-cost">7<sub>20</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Ship Yard</td>
+				<td>1</td>
+				<td>
+					<span class="tech-cost">2<sub>20</sub></span>
+					<span class="tech-cost">3<sub>30</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Ground</td>
+				<td>1</td>
+				<td>
+					<span class="tech-cost">2<sub>10</sub></span>
+					<span class="tech-cost">3<sub>15</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Fighters</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>25</sub></span>
+					<span class="tech-cost">2<sub>30</sub></span>
+					<span class="tech-cost">3<sub>40</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Point Def.</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>20</sub></span>
+					<span class="tech-cost">2<sub>25</sub></span>
+					<span class="tech-cost">3<sub>30</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Terraforming</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>20</sub></span>
+					<span class="tech-cost">2<sub>35</sub></span>
+					<span class="miners">1 2 3 4</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Cloaking</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>30</sub></span>
+					<span class="tech-cost">2<sub>40</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Scanners</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>20</sub></span>
+					<span class="tech-cost">2<sub>30</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Mines</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>30</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Mine Sweeper</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>10</sub></span>
+					<span class="tech-cost">2<sub>15</sub></span>
+					<span class="tech-cost">3<sub>20</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Military Acad.</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>10</sub></span>
+					<span class="tech-cost">2<sub>20</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Boarding</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>20</sub></span>
+					<span class="tech-cost">2<sub>25</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Security</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>15</sub></span>
+					<span class="tech-cost">2<sub>15</sub></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Fast BC</td>
+				<td>0</td>
+				<td>
+					<span class="tech-cost">1<sub>10</sub></span>
+				</td>
+			</tr>
+		</tbody>
 	</table>
 
 
