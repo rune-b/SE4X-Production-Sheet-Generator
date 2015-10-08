@@ -224,6 +224,7 @@
 	<script type="text/javascript">
 
 		var firstPhaseColumn = 1;
+		var isIE = !!navigator.userAgent.match(/Trident/);
 
 		function init()
 		{
@@ -247,7 +248,7 @@
 			}
 
 			
-			phaseColumnsSlider.addEventListener("input", function() 
+			phaseColumnsSlider.addEventListener(isIE ? "change" : "input", function() 
 			{ 
 				setPhaseColumns(parseInt(phaseColumnsSlider.value)); 
 			});
