@@ -212,6 +212,15 @@
 			div.flex-child
 			{
 				flex: 1;
+  				height: 100%;
+  				position: relative;
+			}
+
+			div.flex-content
+			{
+				height: 100%;
+				width: 100%;
+				position: absolute;
 			}
 
 			div#techContainer {
@@ -415,121 +424,123 @@
 		<div class="flex">
 			<h1>Space Empires Production Sheet</h1>
 			<div class="flex-child">
-				<table id="productionSheet">
-					<thead>
-						<tr>
-							<!--<th class="group" rowspan="17">Production</th>-->
-							<th class="description">Economic Phase</th>
-							<th class="phase">1</th>
-						</tr>
-					</thead>
-					<tbody class="production">
-						<tr class="carry-over">
-							<th>Carry over from last turn</th>
-							<td></td>
-						</tr>
-						<tr>
-							<th>+ Colony CPs</th>
-							<td></td>
-						</tr>
-						<tr>
-							<th>+ Mineral CPs</th>
-							<td></td>
-						</tr>
-						<tr class="enable_msPipelines">
-							<th>+ MS Pipeline CPs</th>
-							<td></td>
-						</tr>
-						<tr class="enable_researchCenters">
-							<th>+ Industrial Center CPs</th>
-							<td></td>
-						</tr>
-						<tr class="sum header">
-							<th>Total CP</th>
-							<td></td>
-						</tr>
-						<tr>
-							<th>- Maintenance</th>
-							<td></td>
-						</tr>
-						<tr>
-							<th>- Turn order bid</th>
-							<td></td>
-						</tr>
-						<tr class="enable_researchCenters">
-							<th>&le; 15 CP converted to RP</th>
-							<td></td>
-						</tr>
-						<tr class="header">
-							<th>Subtotal</th>
-							<td></td>
-						</tr>
-						<tr class="disable_researchCenters technologySpending">
-							<th>- Technology spending</th>
-							<td></td>
-						</tr>
-						<tr class="disable_researchCenters shipSpending">
-							<th>- Ship spending</th>
-							<td></td>
-						</tr>
-						<tr class="enable_researchCenters shipSpending">
-							<th>- Purchases</th>
-							<td></td>
-						</tr>
-						<tr class="sum header">
-							<th>Remaining CP</th>
-							<td></td>
-						</tr>
-						<tr>
-							<th>CP spent on upgrades</th>
-							<td></td>
-						</tr>
-						<tr class="enable_maintenanceChanges">
-							<th>Maint. Increase (buys)</th>
-							<td></td>
-						</tr>
-						<tr class="enable_maintenanceChanges">
-							<th>Maint. Decrease (losses)</th>
-							<td></td>
-						</tr>
-					</tbody>
+				<div class="flex-content">
+					<table id="productionSheet">
+						<thead>
+							<tr>
+								<!--<th class="group" rowspan="17">Production</th>-->
+								<th class="description">Economic Phase</th>
+								<th class="phase">1</th>
+							</tr>
+						</thead>
+						<tbody class="production">
+							<tr class="carry-over">
+								<th>Carry over from last turn</th>
+								<td></td>
+							</tr>
+							<tr>
+								<th>+ Colony CPs</th>
+								<td></td>
+							</tr>
+							<tr>
+								<th>+ Mineral CPs</th>
+								<td></td>
+							</tr>
+							<tr class="enable_msPipelines">
+								<th>+ MS Pipeline CPs</th>
+								<td></td>
+							</tr>
+							<tr class="enable_researchCenters">
+								<th>+ Industrial Center CPs</th>
+								<td></td>
+							</tr>
+							<tr class="sum header">
+								<th>Total CP</th>
+								<td></td>
+							</tr>
+							<tr>
+								<th>- Maintenance</th>
+								<td></td>
+							</tr>
+							<tr>
+								<th>- Turn order bid</th>
+								<td></td>
+							</tr>
+							<tr class="enable_researchCenters">
+								<th>&le; 15 CP converted to RP</th>
+								<td></td>
+							</tr>
+							<tr class="header">
+								<th>Subtotal</th>
+								<td></td>
+							</tr>
+							<tr class="disable_researchCenters technologySpending">
+								<th>- Technology spending</th>
+								<td></td>
+							</tr>
+							<tr class="disable_researchCenters shipSpending">
+								<th>- Ship spending</th>
+								<td></td>
+							</tr>
+							<tr class="enable_researchCenters shipSpending">
+								<th>- Purchases</th>
+								<td></td>
+							</tr>
+							<tr class="sum header">
+								<th>Remaining CP</th>
+								<td></td>
+							</tr>
+							<tr>
+								<th>CP spent on upgrades</th>
+								<td></td>
+							</tr>
+							<tr class="enable_maintenanceChanges">
+								<th>Maint. Increase (buys)</th>
+								<td></td>
+							</tr>
+							<tr class="enable_maintenanceChanges">
+								<th>Maint. Decrease (losses)</th>
+								<td></td>
+							</tr>
+						</tbody>
 
-					<tbody class="divider enable_researchCenters">
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-					</tbody>
+						<tbody class="divider enable_researchCenters">
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+						</tbody>
 
-					<tbody class="research enable_researchCenters">
-						
-						<tr class="carry-over">
-							<!--<th class="group" rowspan="6">Research</th>-->
-							<th>Carry over from last turn</th>
-							<td></td>
-						</tr>
-						<tr>
-							<th>+ Research Center RPs</th>
-							<td></td>
-						</tr>
-						<tr>
-							<th>&le; 15 CP converted to RP</th>
-							<td></td>
-						</tr>
-						<tr class="sum header">
-							<th>Total RP</th>
-							<td></td>
-						</tr>
-						<tr class="technologySpending">
-							<th>- Technology spending</th>
-							<td></td>
-						</tr>
-						<tr class="sum header">
-							<th>Remaining RP</th>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
+						<tbody class="research enable_researchCenters">
+							
+							<tr class="carry-over">
+								<!--<th class="group" rowspan="6">Research</th>-->
+								<th>Carry over from last turn</th>
+								<td></td>
+							</tr>
+							<tr>
+								<th>+ Research Center RPs</th>
+								<td></td>
+							</tr>
+							<tr>
+								<th>&le; 15 CP converted to RP</th>
+								<td></td>
+							</tr>
+							<tr class="sum header">
+								<th>Total RP</th>
+								<td></td>
+							</tr>
+							<tr class="technologySpending">
+								<th>- Technology spending</th>
+								<td></td>
+							</tr>
+							<tr class="sum header">
+								<th>Remaining RP</th>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	
