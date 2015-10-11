@@ -269,12 +269,54 @@
 		{
 			for (var i = 0; i < inputs.length; i++)
 			{
-				inputClicked.call(inputs[i]);
+				var input = inputs[i];
+				loadSetting(input);
+
+				if (input.type == "checkbox") {
+					inputClicked.call(input);
+				}
+
+				if (input.id === "phaseColumns") {
+					setPhaseColumns(input.value);
+				}
+			}
+		}
+
+		function loadSetting(input){
+			if (!input.id)
+				return;
+
+			var storageId = "se4x:" + input.id;
+
+			var value  = localStorage.getItem(storageId);
+			if (value) {
+				if (input.type == "checkbox") {
+					input.checked = value === "true";
+				}
+
+				if (input.type == "range"){
+					input.value = value;
+				}
 			}
 		}
 
 		function saveSettings(){
 			//TODO
+		}
+
+		function saveSetting(input){
+			if (!input.id)
+				return;
+
+			var storageId = "se4x:" + input.id;
+
+			if (input.type == "checkbox") {
+				localStorage.setItem(storageId, input.checked);
+			}
+
+			if (input.type == "range"){
+				localStorage.setItem(storageId, input.value);
+			}
 		}
 
 		function inputClicked()
@@ -284,6 +326,8 @@
 				toggleClass("enable_" + this.id, this.checked);
 				toggleClass("disable_" + this.id, !this.checked);
 			}
+
+			saveSetting(this);
 		}
 
 		function setPhaseColumns(columnCount)
