@@ -43,6 +43,7 @@
 			position: absolute;
 			right: 0.5em;
 			top: 0.5em;
+			width: 4em;
 			border: solid thin black;
 			border-radius: 0.4em; 	
 			background-color: transparent;
@@ -50,21 +51,36 @@
 			cursor: pointer;
 		}
 		input#menuBtn:hover {
-			background-color: silver;
+			background-color: #eee;
 		}
 		#setup {
 			position: absolute;
-			top: 2.5em;
-			right: 0.5em;
+			top: 0.5em;
+			right: 5em;
 			background-color: white;
 			display: none;
 
-			padding: 1em;
+			padding: 0.5em;
 			border: solid thin black;
+			border-radius: 0.4em;
+		}
+
+		#setup h1 {
+			margin: 0 0 0.5em 0;
+			border-bottom: solid thin black;
 		}
 
 		#setup input[type="checkbox"] {			
 			margin-left: 0;
+		}
+
+		#setup .setupColumn{
+			float: left;
+			margin-right: 3em;
+		}
+
+		#setup ul {
+			padding-left: 1em;
 		}
 
 		table#productionSheet{
@@ -462,53 +478,55 @@
 	<div id="setup">
 
 		<h1>Select advanced and optional rules</h1>
+		<div class="setupColumn">
+			<h2>Page setup</h2>
 
-		<h2>Page setup</h2>
+			<ul>
+				<!--<li>
+					<label><input id="orientationPortrait" name="orientation" type="radio" value="portrait">Portrait</label>
+					<label><input id="orientationLandscape" name="orientation" type="radio" value="portrait" checked>Landscape</label>
+				</li>-->
+				<li>
+					<label>Economic Phase columns: <input type="range" id="phaseColumns" min="10" max="30" /></label>
+					<output for="phaseColumns" id="phaseColumnCount"></output>
+				</li>
+				<li>
+					<label><input type="checkbox" id="maintenanceChanges">Show rows for maintenance inrease/decrease</label>
+				</li>
+			</ul>
 
-		<ul>
-			<!--<li>
-				<label><input id="orientationPortrait" name="orientation" type="radio" value="portrait">Portrait</label>
-				<label><input id="orientationLandscape" name="orientation" type="radio" value="portrait" checked>Landscape</label>
-			</li>-->
-			<li>
-				<label>Economic Phase columns: <input type="range" id="phaseColumns" min="10" max="30" /></label>
-				<output for="phaseColumns" id="phaseColumnCount"></output>
-			</li>
-			<li>
-				<label><input type="checkbox" id="maintenanceChanges">Show rows for maintenance inrease/decrease</label>
-			</li>
-		</ul>
+			<h2>Base game</h2>
 
-		<h2>Base game</h2>
+			<ul>
+				<li><label><input type="checkbox" id="msPipelines">10. Merchant Ship Pipelines</label></li>
+				<li><label><input type="checkbox" id="carriers">11. Carriers, Fighters &amp; Point Defense</label></li>
+				<li><label><input type="checkbox" id="cloaking">12. Raiders: Cloaking and Scanners</label></li>
+				<li><label><input type="checkbox" id="mines">13. Mines and Mine Sweepers</label></li>
+			</ul>
+		</div>
+		<div class="setupColumn">
+			<h2>Close Encounters</h2>
 
-		<ul>
-			<li><label><input type="checkbox" id="msPipelines">10. Merchant Ship Pipelines</label></li>
-			<li><label><input type="checkbox" id="carriers">11. Carriers, Fighters &amp; Point Defense</label></li>
-			<li><label><input type="checkbox" id="cloaking">12. Raiders: Cloaking and Scanners</label></li>
-			<li><label><input type="checkbox" id="mines">13. Mines and Mine Sweepers</label></li>
-		</ul>
-
-		<h2>Close Encounters</h2>
-
-		<ul>
-			<li><label><input type="checkbox" id="reducedTechCosts" disabled>2. Reduced technology costs</label></li>
-			<li><label><input type="checkbox" id="experience">3. Ship Experience and Military Academies</label></li>
-			<li><label><input type="checkbox" id="boarding">4. Boarding and Capturing Ships</label></li>
-			<li><label><input type="checkbox" id="security">5. Security Forces</label></li>
-			<li><label><input type="checkbox" id="titans">6. Titans</label></li>
-			<li><label><input type="checkbox" disabled>8. Mine Sweeper Technology</label></li>
-			<li><label><input type="checkbox" id="movement">9. Movement Technology</label></li>
-			<li><label><input type="checkbox" disabled>10. Reaction Movement</label></li>
-			<li><label><input type="checkbox" id="fastBC">11. Fast Battlecruisers</label></li>
-			<li><label><input type="checkbox" id="groundCombat">14. Transports and Ground Combat</label></li>
-			<li><label><input type="checkbox" disabled>16. Flagships</label></li>
-			<li><label><input type="checkbox" id="researchCenters">17. Research and Industrial Centers</label></li>
-			<li><label><input type="checkbox" id="terraformingNebulae">18. Terraforming Nebulae</label></li>
-			<li><label><input type="checkbox" disabled>19. Unique Ships</label></li>
-			<li><label><input type="checkbox" disabled>20. Slow Scientists</label></li>
-			<li><label><input type="checkbox" disabled>20. Smart Scientists</label></li>
-			<li><label><input type="checkbox" disabled>20. Bloody Combat</label></li>
-		</ul>
+			<ul>
+				<li><label><input type="checkbox" id="reducedTechCosts" disabled>2. Reduced technology costs</label></li>
+				<li><label><input type="checkbox" id="experience">3. Ship Experience and Military Academies</label></li>
+				<li><label><input type="checkbox" id="boarding">4. Boarding and Capturing Ships</label></li>
+				<li><label><input type="checkbox" id="security">5. Security Forces</label></li>
+				<li><label><input type="checkbox" id="titans">6. Titans</label></li>
+				<li><label><input type="checkbox" disabled>8. Mine Sweeper Technology</label></li>
+				<li><label><input type="checkbox" id="movement">9. Movement Technology</label></li>
+				<li><label><input type="checkbox" disabled>10. Reaction Movement</label></li>
+				<li><label><input type="checkbox" id="fastBC">11. Fast Battlecruisers</label></li>
+				<li><label><input type="checkbox" id="groundCombat">14. Transports and Ground Combat</label></li>
+				<li><label><input type="checkbox" disabled>16. Flagships</label></li>
+				<li><label><input type="checkbox" id="researchCenters">17. Research and Industrial Centers</label></li>
+				<li><label><input type="checkbox" id="terraformingNebulae">18. Terraforming Nebulae</label></li>
+				<li><label><input type="checkbox" disabled>19. Unique Ships</label></li>
+				<li><label><input type="checkbox" disabled>20. Slow Scientists</label></li>
+				<li><label><input type="checkbox" disabled>20. Smart Scientists</label></li>
+				<li><label><input type="checkbox" disabled>20. Bloody Combat</label></li>
+			</ul>
+		</div>
 	</div>
 
 	<div id="productionSheetAndTech" class="flexbox">		
