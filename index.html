@@ -28,7 +28,7 @@
 		}
 
 		li {
-
+			list-style-type: none;
 		}
 
 		label{
@@ -37,6 +37,34 @@
 
 		table {
 			border-collapse: collapse;
+		}
+
+		input#menuBtn{
+			position: absolute;
+			right: 0.5em;
+			top: 0.5em;
+			border: solid thin black;
+			border-radius: 0.4em; 	
+			background-color: transparent;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		input#menuBtn:hover {
+			background-color: silver;
+		}
+		#setup {
+			position: absolute;
+			top: 2.5em;
+			right: 0.5em;
+			background-color: white;
+			display: none;
+
+			padding: 1em;
+			border: solid thin black;
+		}
+
+		#setup input[type="checkbox"] {			
+			margin-left: 0;
 		}
 
 		table#productionSheet{
@@ -159,7 +187,8 @@
 				padding: 0em;
 				size: auto landscape;
 			}
-			#setup {
+			#setup,
+			#menuBtn {
 				display:none;
 			}
 
@@ -257,6 +286,11 @@
 				}
 			}
 
+			var menuBtn = document.getElementById("menuBtn");
+			menuBtn.addEventListener("click", function()
+			{
+				toggle_visibility("setup");
+			});
 			
 			phaseColumnsSlider.addEventListener(isIE ? "change" : "input", function() 
 			{ 
@@ -272,7 +306,7 @@
 				var input = inputs[i];
 				loadSetting(input);
 
-				if (input.type == "checkbox") {
+				if (input.type === "checkbox") {
 					inputClicked.call(input);
 				}
 
@@ -290,11 +324,11 @@
 
 			var value  = localStorage.getItem(storageId);
 			if (value) {
-				if (input.type == "checkbox") {
+				if (input.type === "checkbox") {
 					input.checked = value === "true";
 				}
 
-				if (input.type == "range"){
+				if (input.type === "range"){
 					input.value = value;
 				}
 			}
@@ -310,24 +344,25 @@
 
 			var storageId = "se4x:" + input.id;
 
-			if (input.type == "checkbox") {
+			if (input.type === "checkbox") {
 				localStorage.setItem(storageId, input.checked);
 			}
 
-			if (input.type == "range"){
+			if (input.type === "range"){
 				localStorage.setItem(storageId, input.value);
 			}
 		}
 
 		function inputClicked()
 		{
-			if (this.type == "checkbox")
+			if (this.type === "checkbox")
 			{
 				toggleClass("enable_" + this.id, this.checked);
 				toggleClass("disable_" + this.id, !this.checked);
 			}
 
 			saveSetting(this);
+			
 		}
 
 		function setPhaseColumns(columnCount)
@@ -370,21 +405,31 @@
 
 		function toggleClass(className, visible)
 		{
-			var ruleSelector = "." + className;
+			toggleElement("." + className, visible);
+		}
 
+		function toggleElement(selector, visible){
 			if (!visible)
 			{
-				var rule = getStyleRule(ruleSelector);
+				var rule = getStyleRule(selector);
 				if (rule === null) 
 				{
-					document.styleSheets[0].insertRule(ruleSelector + " { display: none; }", 0);
+					document.styleSheets[0].insertRule(selector + " { display: none; }", 0);
 				}
 			}
 			else
 			{
-				deleteStyleRule(ruleSelector);
+				deleteStyleRule(selector);
 			}
 		}
+
+		function toggle_visibility(id) {
+	       var e = document.getElementById(id);
+	       if(e.style.display == 'block')
+	          e.style.display = 'none';
+	       else
+	          e.style.display = 'block';
+	    }
 
 		function deleteStyleRule(selector)
 		{
@@ -413,6 +458,7 @@
 	</script>
 </head>
 <body onload="init()">
+	<input id="menuBtn" type="button" value="Menu"/>
 	<div id="setup">
 
 		<h1>Select advanced and optional rules</h1>
