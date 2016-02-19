@@ -10,6 +10,7 @@
 		body {
 			font-family: sans-serif;
 			font-size: 10pt;
+			margin: 0.5em;
 		}
 
 		h1{
@@ -44,14 +45,15 @@
 			right: 0.5em;
 			top: 0.5em;
 			width: 4em;
-			border: solid thin black;
+			border: solid 0.2em black;
 			border-radius: 0.4em; 	
 			background-color: transparent;
 			font-weight: bold;
 			cursor: pointer;
 		}
 		input#menuBtn:hover {
-			background-color: #eee;
+			background-color: black;
+			color: white;
 		}
 		#setup {
 			position: absolute;
@@ -61,7 +63,7 @@
 			display: none;
 
 			padding: 0.5em;
-			border: solid thin black;
+			border: solid 0.2em black;
 			border-radius: 0.4em;
 		}
 
@@ -289,6 +291,7 @@
 
 			var setup = document.getElementById("setup");
 			var inputs = setup.getElementsByTagName("input");
+			var menuBtn = document.getElementById("menuBtn");
 
 			loadSettings(inputs);
 
@@ -302,7 +305,11 @@
 				}
 			}
 
-			var menuBtn = document.getElementById("menuBtn");
+			document.addEventListener("click", function(event) {
+				if(!(setup.contains(event.target) || event.target === menuBtn))
+					setup.style.display = 'none'
+			});
+
 			menuBtn.addEventListener("click", function()
 			{
 				toggle_visibility("setup");
@@ -312,6 +319,8 @@
 			{ 
 				setPhaseColumns(parseInt(phaseColumnsSlider.value)); 
 			});
+
+			var sheet = document.getElementById("");
 
 		}
 
