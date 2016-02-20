@@ -384,10 +384,37 @@
 			{
 				toggleClass("enable_" + this.id, this.checked);
 				toggleClass("disable_" + this.id, !this.checked);
+
+				if (this.id === "slowScientists" || this.id === "smartScientists")
+				{
+					var chkSlowScientists = document.getElementById("slowScientists");
+					var chkSmartScientists = document.getElementById("smartScientists");
+
+					chkSlowScientists.disabled = chkSmartScientists.checked;
+					chkSmartScientists.disabled = chkSlowScientists.checked;
+
+					if (this.id === "slowScientists")
+						changeTechCost(5 * (chkSlowScientists.checked ? 1 : -1));
+
+
+					if (this.id === "smartScientists")
+						changeTechCost(5 * (chkSmartScientists.checked ? -1 : 1));
+				}
 			}
 
 			saveSetting(this);
 			
+		}
+
+		function changeTechCost(change)
+		{
+			var tech = document.getElementById("techContainer");
+			var techCosts = tech.getElementsByClassName("tech-cost");
+			
+			for (var i = 0; i < techCosts.length; i++){
+				var sub = techCosts[i].getElementsByTagName("sub")[0];
+				sub.innerHTML = Number(sub.innerHTML) + change;
+			};
 		}
 
 		function setPhaseColumns(columnCount)
@@ -531,8 +558,8 @@
 				<li><label><input type="checkbox" id="researchCenters">17. Research and Industrial Centers</label></li>
 				<li><label><input type="checkbox" id="terraformingNebulae">18. Terraforming Nebulae</label></li>
 				<li><label><input type="checkbox" disabled>19. Unique Ships</label></li>
-				<li><label><input type="checkbox" disabled>20. Slow Scientists</label></li>
-				<li><label><input type="checkbox" disabled>20. Smart Scientists</label></li>
+				<li><label><input type="checkbox" id="slowScientists">20. Slow Scientists</label></li>
+				<li><label><input type="checkbox" id="smartScientists">20. Smart Scientists</label></li>
 				<li><label><input type="checkbox" disabled>20. Bloody Combat</label></li>
 			</ul>
 		</div>
