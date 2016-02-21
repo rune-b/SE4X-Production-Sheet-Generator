@@ -384,10 +384,37 @@
 			{
 				toggleClass("enable_" + this.id, this.checked);
 				toggleClass("disable_" + this.id, !this.checked);
+
+				if (this.id === "slowScientists" || this.id === "smartScientists")
+				{
+					var chkSlowScientists = document.getElementById("slowScientists");
+					var chkSmartScientists = document.getElementById("smartScientists");
+
+					chkSlowScientists.disabled = chkSmartScientists.checked;
+					chkSmartScientists.disabled = chkSlowScientists.checked;
+
+					if (this.id === "slowScientists")
+						changeTechCost(5 * (chkSlowScientists.checked ? 1 : -1));
+
+
+					if (this.id === "smartScientists")
+						changeTechCost(5 * (chkSmartScientists.checked ? -1 : 1));
+				}
 			}
 
 			saveSetting(this);
 			
+		}
+
+		function changeTechCost(change)
+		{
+			var tech = document.getElementById("techContainer");
+			var techCosts = tech.getElementsByClassName("tech-cost");
+			
+			for (var i = 0; i < techCosts.length; i++){
+				var sub = techCosts[i].getElementsByTagName("sub")[0];
+				sub.innerHTML = Number(sub.innerHTML) + change;
+			};
 		}
 
 		function setPhaseColumns(columnCount)
@@ -517,22 +544,22 @@
 			<h2>Close Encounters</h2>
 
 			<ul>
-				<li><label><input type="checkbox" id="reducedTechCosts" disabled>2. Reduced technology costs</label></li>
+				<li><label><input type="checkbox" id="updatedTechCosts">2. Updated technology costs</label></li>
 				<li><label><input type="checkbox" id="experience">3. Ship Experience and Military Academies</label></li>
 				<li><label><input type="checkbox" id="boarding">4. Boarding and Capturing Ships</label></li>
 				<li><label><input type="checkbox" id="security">5. Security Forces</label></li>
 				<li><label><input type="checkbox" id="titans">6. Titans</label></li>
-				<li><label><input type="checkbox" disabled>8. Mine Sweeper Technology</label></li>
-				<li><label><input type="checkbox" id="movement">9. Movement Technology</label></li>
-				<li><label><input type="checkbox" disabled>10. Reaction Movement</label></li>
+				<li><label><input type="checkbox" id="mineSweeper3">8. Mine Sweeper Technology 3</label></li>
+				<li><label><input type="checkbox" id="movement">9. Movement Technology 7</label></li>
+				<li><label><input type="checkbox" id="reactionMovement">10. Reaction Movement</label></li>
 				<li><label><input type="checkbox" id="fastBC">11. Fast Battlecruisers</label></li>
 				<li><label><input type="checkbox" id="groundCombat">14. Transports and Ground Combat</label></li>
 				<li><label><input type="checkbox" disabled>16. Flagships</label></li>
 				<li><label><input type="checkbox" id="researchCenters">17. Research and Industrial Centers</label></li>
 				<li><label><input type="checkbox" id="terraformingNebulae">18. Terraforming Nebulae</label></li>
 				<li><label><input type="checkbox" disabled>19. Unique Ships</label></li>
-				<li><label><input type="checkbox" disabled>20. Slow Scientists</label></li>
-				<li><label><input type="checkbox" disabled>20. Smart Scientists</label></li>
+				<li><label><input type="checkbox" id="slowScientists">20. Slow Scientists</label></li>
+				<li><label><input type="checkbox" id="smartScientists">20. Smart Scientists</label></li>
 				<li><label><input type="checkbox" disabled>20. Bloody Combat</label></li>
 			</ul>
 		</div>
@@ -680,8 +707,14 @@
 							<span class="tech-cost">2<sub>10</sub></span>
 							<span class="tech-cost">3<sub>15</sub></span>
 							<span class="tech-cost">4<sub>20</sub></span>
-							<span class="tech-cost">5<sub>20</sub></span>
-							<span class="tech-cost">6<sub>25</sub></span>
+							<span class="tech-cost">5
+								<sub class="disable_updatedTechCosts">25</sub>
+								<sub class="enable_updatedTechCosts">20</sub>
+							</span>
+							<span class="tech-cost">6
+								<sub class="disable_updatedTechCosts">30</sub>
+								<sub class="enable_updatedTechCosts">25</sub>
+							</span>
 							<span class="tech-cost enable_titans">7<sub>30</sub></span>
 						</td>
 					</tr>
@@ -689,18 +722,24 @@
 						<td>Attack</td>
 						<td>0</td>
 						<td>
-							<span class="tech-cost">1<sub>10</sub></span>
-							<span class="tech-cost">2<sub>20</sub></span>
-							<span class="tech-cost">3<sub>30</sub></span>
+							<span class="tech-cost">1<sub>20</sub></span>
+							<span class="tech-cost">2<sub>30</sub></span>
+							<span class="tech-cost">3
+								<sub class="disable_updatedTechCosts">40</sub>
+								<sub class="enable_updatedTechCosts">30</sub>
+							</span>
 						</td>
 					</tr>
 					<tr>
 						<td>Defense</td>
 						<td>0</td>
 						<td>
-							<span class="tech-cost">1<sub>10</sub></span>
-							<span class="tech-cost">2<sub>20</sub></span>
-							<span class="tech-cost">3<sub>30</sub></span>
+							<span class="tech-cost">1<sub>20</sub></span>
+							<span class="tech-cost">2<sub>30</sub></span>
+							<span class="tech-cost">3
+								<sub class="disable_updatedTechCosts">40</sub>
+								<sub class="enable_updatedTechCosts">30</sub>
+							</span>
 						</td>
 					</tr>
 					<tr>
@@ -708,8 +747,14 @@
 						<td>0</td>
 						<td>
 							<span class="tech-cost">1<sub>15</sub></span>
-							<span class="tech-cost">2<sub>15</sub></span>
-							<span class="tech-cost">3<sub>20</sub></span>
+							<span class="tech-cost">2
+								<sub class="disable_updatedTechCosts">20</sub>
+								<sub class="enable_updatedTechCosts">15</sub>
+							</span>
+							<span class="tech-cost">3
+								<sub class="disable_updatedTechCosts">30</sub>
+								<sub class="enable_updatedTechCosts">20</sub>
+							</span>
 						</td>
 					</tr>
 					<tr>
@@ -717,10 +762,22 @@
 						<td>1</td>
 						<td>
 							<span class="tech-cost">2<sub>20</sub></span>
-							<span class="tech-cost">3<sub>25</sub></span>
-							<span class="tech-cost">4<sub>25</sub></span>
-							<span class="tech-cost">5<sub>25</sub></span>
-							<span class="tech-cost">6<sub>20</sub></span>
+							<span class="tech-cost">3
+								<sub class="disable_updatedTechCosts">30</sub>
+								<sub class="enable_updatedTechCosts">25</sub>
+							</span>
+							<span class="tech-cost">4
+								<sub class="disable_updatedTechCosts">40</sub>
+								<sub class="enable_updatedTechCosts">25</sub>
+							</span>
+							<span class="tech-cost">5
+								<sub class="disable_updatedTechCosts">40</sub>
+								<sub class="enable_updatedTechCosts">25</sub>
+							</span>
+							<span class="tech-cost">6
+								<sub class="disable_updatedTechCosts">40</sub>
+								<sub class="enable_updatedTechCosts">20</sub>
+							</span>
 							<span class="tech-cost enable_movement">7<sub>20</sub></span>
 						</td>
 					</tr>
@@ -772,8 +829,11 @@
 						<td>Terraforming</td>
 						<td>0</td>
 						<td>
-							<span class="tech-cost">1<sub>20</sub></span>
-							<span class="tech-cost enable_terraformingNebulae">2<sub>35</sub></span>
+							<span class="tech-cost">1
+								<sub class="disable_updatedTechCosts">25</sub>
+								<sub class="enable_updatedTechCosts">20</sub>
+							</span>
+							<span class="tech-cost enable_terraformingNebulae">2<sub>25</sub></span>
 							<span class="miners enable_terraformingNebulae">1 2 3 4</span>
 						</td>
 					</tr>
@@ -797,7 +857,10 @@
 						<td>Mines</td>
 						<td>0</td>
 						<td>
-							<span class="tech-cost">1<sub>30</sub></span>
+							<span class="tech-cost">1
+								<sub class="disable_updatedTechCosts">20</sub>
+								<sub class="enable_updatedTechCosts">30</sub>
+							</span>
 						</td>
 					</tr>
 					<tr class="enable_mines">
@@ -805,8 +868,11 @@
 						<td>0</td>
 						<td>
 							<span class="tech-cost">1<sub>10</sub></span>
-							<span class="tech-cost">2<sub>15</sub></span>
-							<span class="tech-cost">3<sub>20</sub></span>
+							<span class="tech-cost">2
+								<sub class="disable_updatedTechCosts">20</sub>
+								<sub class="enable_updatedTechCosts">15</sub>
+							</span>
+							<span class="tech-cost enable_mineSweeper3">3<sub>20</sub></span>
 						</td>
 					</tr>
 				</table>
@@ -848,7 +914,7 @@
 						<td>0</td>
 						<td>
 							<span class="tech-cost">1<sub>15</sub></span>
-							<span class="tech-cost">2<sub>15</sub></span>
+							<span class="tech-cost enable_reactionMovement">2<sub>15</sub></span>
 						</td>
 					</tr>
 					<tr class="enable_fastBC">
