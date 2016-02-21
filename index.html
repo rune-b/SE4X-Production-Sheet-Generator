@@ -544,7 +544,7 @@
 			<h2>Close Encounters</h2>
 
 			<ul>
-				<li><label><input type="checkbox" id="updatedTechCosts" disabled>2. Updated technology costs</label></li>
+				<li><label><input type="checkbox" id="updatedTechCosts">2. Updated technology costs</label></li>
 				<li><label><input type="checkbox" id="experience">3. Ship Experience and Military Academies</label></li>
 				<li><label><input type="checkbox" id="boarding">4. Boarding and Capturing Ships</label></li>
 				<li><label><input type="checkbox" id="security">5. Security Forces</label></li>
@@ -707,8 +707,14 @@
 							<span class="tech-cost">2<sub>10</sub></span>
 							<span class="tech-cost">3<sub>15</sub></span>
 							<span class="tech-cost">4<sub>20</sub></span>
-							<span class="tech-cost">5<sub>20</sub></span>
-							<span class="tech-cost">6<sub>25</sub></span>
+							<span class="tech-cost">5
+								<sub class="disable_updatedTechCosts">25</sub>
+								<sub class="enable_updatedTechCosts">20</sub>
+							</span>
+							<span class="tech-cost">6
+								<sub class="disable_updatedTechCosts">30</sub>
+								<sub class="enable_updatedTechCosts">25</sub>
+							</span>
 							<span class="tech-cost enable_titans">7<sub>30</sub></span>
 						</td>
 					</tr>
@@ -716,18 +722,24 @@
 						<td>Attack</td>
 						<td>0</td>
 						<td>
-							<span class="tech-cost">1<sub>10</sub></span>
-							<span class="tech-cost">2<sub>20</sub></span>
-							<span class="tech-cost">3<sub>30</sub></span>
+							<span class="tech-cost">1<sub>20</sub></span>
+							<span class="tech-cost">2<sub>30</sub></span>
+							<span class="tech-cost">3
+								<sub class="disable_updatedTechCosts">40</sub>
+								<sub class="enable_updatedTechCosts">30</sub>
+							</span>
 						</td>
 					</tr>
 					<tr>
 						<td>Defense</td>
 						<td>0</td>
 						<td>
-							<span class="tech-cost">1<sub>10</sub></span>
-							<span class="tech-cost">2<sub>20</sub></span>
-							<span class="tech-cost">3<sub>30</sub></span>
+							<span class="tech-cost">1<sub>20</sub></span>
+							<span class="tech-cost">2<sub>30</sub></span>
+							<span class="tech-cost">3
+								<sub class="disable_updatedTechCosts">40</sub>
+								<sub class="enable_updatedTechCosts">30</sub>
+							</span>
 						</td>
 					</tr>
 					<tr>
@@ -735,8 +747,14 @@
 						<td>0</td>
 						<td>
 							<span class="tech-cost">1<sub>15</sub></span>
-							<span class="tech-cost">2<sub>15</sub></span>
-							<span class="tech-cost">3<sub>20</sub></span>
+							<span class="tech-cost">2
+								<sub class="disable_updatedTechCosts">20</sub>
+								<sub class="enable_updatedTechCosts">15</sub>
+							</span>
+							<span class="tech-cost">3
+								<sub class="disable_updatedTechCosts">30</sub>
+								<sub class="enable_updatedTechCosts">20</sub>
+							</span>
 						</td>
 					</tr>
 					<tr>
@@ -744,10 +762,22 @@
 						<td>1</td>
 						<td>
 							<span class="tech-cost">2<sub>20</sub></span>
-							<span class="tech-cost">3<sub>25</sub></span>
-							<span class="tech-cost">4<sub>25</sub></span>
-							<span class="tech-cost">5<sub>25</sub></span>
-							<span class="tech-cost">6<sub>20</sub></span>
+							<span class="tech-cost">3
+								<sub class="disable_updatedTechCosts">30</sub>
+								<sub class="enable_updatedTechCosts">25</sub>
+							</span>
+							<span class="tech-cost">4
+								<sub class="disable_updatedTechCosts">40</sub>
+								<sub class="enable_updatedTechCosts">25</sub>
+							</span>
+							<span class="tech-cost">5
+								<sub class="disable_updatedTechCosts">40</sub>
+								<sub class="enable_updatedTechCosts">25</sub>
+							</span>
+							<span class="tech-cost">6
+								<sub class="disable_updatedTechCosts">40</sub>
+								<sub class="enable_updatedTechCosts">20</sub>
+							</span>
 							<span class="tech-cost enable_movement">7<sub>20</sub></span>
 						</td>
 					</tr>
@@ -799,8 +829,11 @@
 						<td>Terraforming</td>
 						<td>0</td>
 						<td>
-							<span class="tech-cost">1<sub>20</sub></span>
-							<span class="tech-cost enable_terraformingNebulae">2<sub>35</sub></span>
+							<span class="tech-cost">1
+								<sub class="disable_updatedTechCosts">25</sub>
+								<sub class="enable_updatedTechCosts">20</sub>
+							</span>
+							<span class="tech-cost enable_terraformingNebulae">2<sub>25</sub></span>
 							<span class="miners enable_terraformingNebulae">1 2 3 4</span>
 						</td>
 					</tr>
@@ -824,7 +857,10 @@
 						<td>Mines</td>
 						<td>0</td>
 						<td>
-							<span class="tech-cost">1<sub>30</sub></span>
+							<span class="tech-cost">1
+								<sub class="disable_updatedTechCosts">20</sub>
+								<sub class="enable_updatedTechCosts">30</sub>
+							</span>
 						</td>
 					</tr>
 					<tr class="enable_mines">
@@ -832,7 +868,10 @@
 						<td>0</td>
 						<td>
 							<span class="tech-cost">1<sub>10</sub></span>
-							<span class="tech-cost">2<sub>15</sub></span>
+							<span class="tech-cost">2
+								<sub class="disable_updatedTechCosts">20</sub>
+								<sub class="enable_updatedTechCosts">15</sub>
+							</span>
 							<span class="tech-cost enable_mineSweeper3">3<sub>20</sub></span>
 						</td>
 					</tr>
