@@ -42,7 +42,7 @@
 
 		input#menuBtn{
 			position: absolute;
-			right: 0.5em;
+			left: 0.5em;
 			top: 0.5em;
 			width: 4em;
 			border: solid 0.2em black;
@@ -58,7 +58,7 @@
 		#setup {
 			position: absolute;
 			top: 0.5em;
-			right: 5em;
+			left: 5em;
 			background-color: white;
 			display: none;
 
@@ -92,7 +92,6 @@
 		table.technologyProgression{
 			width: 33%;
 			float: left;
-			/*margin-right: 1em;*/
 		}
 
 		table.technologyProgression:nth-of-type(1),
@@ -102,6 +101,14 @@
 
 		table.technologyProgression td{			
 			height: 1em;
+		}
+
+		#shipTechnologySheet h1 {
+			clear: both;
+		}
+		table.technologySheet{
+			width: 50%;
+			float: left;
 		}
 
 		tbody{
@@ -152,7 +159,8 @@
 		}
 
 		table.technologyProgression th,
-		table.technologyProgression td:nth-of-type(2){
+		table.technologyProgression td:nth-of-type(2),
+		table.technologySheet th{
 			text-align: center;
 		}
 
@@ -928,10 +936,199 @@
 			</table>
 		</div>
 	</div>
-	<!--<div id="shipTechnologySheet">
-		<h1>Ship Technology Sheet</h1>
-	</div>-->
+	<div id="shipTechnologySheet">
+		<h1>Ship Technology Sheet (Circle the Current Technology Level when the Group is built)</h1>
+		<table class="technologySheet">
+			<thead>
+				<tr>
+					<th>Grp</th>
+					<th>Att</th>
+					<th>Def</th>
+					<th>Tactics</th>
+					<th>Move</th>
+					<th>Other</th>
+					<th>Exp.</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>DD #6</td>
+					<td>1</td>
+					<td>1</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td>Scan: 1 2</td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>CA #6</td>
+					<td>1 2</td>
+					<td>1 2</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td>Exp: 1 2</td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>BC #6</td>
+					<td>1 2</td>
+					<td>1 2</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td>Fast: 1</td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>BB #6</td>
+					<td>1 2 3</td>
+					<td>1 2 3</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td></td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>DN #5</td>
+					<td>1 2 3</td>
+					<td>1 2 3</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td></td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>TN #5</td>
+					<td>1 2 3</td>
+					<td>1 2 3</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td>FTR: 1-3</td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td colspan='2'>Name: </td>
+					<td colspan='2'>Stats: </td>
+					<td colspan='1'>Cost:</td>
+					<td colspan='2'>Specials:</td>
+				</tr>
+				<tr>
+					<td>UN #6</td>
+					<td>1 2 3</td>
+					<td>1 2 3</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td></td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>R #6</td>
+					<td>1 2</td>
+					<td>1 2</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td>CLoak: 2</td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>SC #6</td>
+					<td>1</td>
+					<td>1</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td>PD: 1 2 3</td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>F #10</td>
+					<td>1</td>
+					<td>1</td>
+					<td>1 2 3</td>
+					<td></td>
+					<td>FTR: 2 3</td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>CV #6</td>
+					<td>1</td>
+					<td>1</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td></td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>SW #5</td>
+					<td>1</td>
+					<td>1</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td>SW: 2 3</td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>BD #6</td>
+					<td></td>
+					<td>1 2</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td>BD: 2</td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>T #6</td>
+					<td>1</td>
+					<td>1</td>
+					<td>1 2 3</td>
+					<td>2 3 4 5 6 7</td>
+					<td>Grnd: 3</td>
+					<td>S V E L</td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="technologySheet">
+			<thead>
+				<tr>
+					<th>Grp</th>
+					<th>Att</th>
+					<th>Def</th>
+					<th>Tactics</th>
+					<th>Move</th>
+					<th>Other</th>
+					<th>Exp.</th>
+				</tr>
+			</thead>
+			<tbody>
 
+			</tbody>
+		</table>
+
+	</div>
 </body>
 
 </html>
