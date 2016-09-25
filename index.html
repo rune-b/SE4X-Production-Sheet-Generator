@@ -330,6 +330,8 @@
 
 			var sheet = document.getElementById("");
 
+			setupShipGroups();
+
 		}
 
 		function loadSettings(inputs) 
@@ -459,6 +461,27 @@
 							row.deleteCell(row.cells.length - 1);
 						}
 					}				
+				}
+			}
+		}
+
+		function setupShipGroups(){
+			var shipTechSheet = document.getElementById("shipTechnologySheet");
+			var table = shipTechSheet.getElementsByClassName("technologySheet")[0]; //TODO: multiple tables?
+			var shipTypes = table.getElementsByTagName("tbody");
+
+			for (var i = 0; i < shipTypes.length; i++)
+			{
+				var shipType = shipTypes[i];
+				var rows = shipType.getElementsByTagName("tr");
+				var template = rows[rows.length - 1];
+				var t = template.getElementsByTagName("td")[0].innerHTML;			
+				var match = t.match(/(.*#)(\d*)/); 
+
+				for(var n = 1; n < match[2]; n++){
+					var newNode = template.cloneNode(true);
+					newNode.getElementsByTagName("td")[0].innerHTML = match[1] + n;
+					shipType.insertBefore(newNode, template);
 				}
 			}
 		}
@@ -1017,7 +1040,7 @@
 				</tr>
 			</tbody>
 			<tbody>
-				<tr>
+				<tr class='uniqueDesign'>
 					<td colspan='2'>Name: </td>
 					<td colspan='2'>Stats: </td>
 					<td colspan='1'>Cost:</td>
