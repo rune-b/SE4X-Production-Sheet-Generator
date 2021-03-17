@@ -481,10 +481,15 @@
         var techCosts = tech.getElementsByClassName("tech-cost");
 
         for (var i = 0; i < techCosts.length; i++) {
-          var sub = techCosts[i].getElementsByTagName("sub")[0];
-          sub.innerHTML = Number(sub.innerHTML) + change;
-			};
-      }
+          var subs = techCosts[i].getElementsByTagName("sub");
+
+          if (subs.length > 1)
+            console.log(subs);
+
+          for (var j = 0; j < subs.length; j++)
+            subs[j].innerHTML = Number(subs[j].innerHTML) + change;
+        };
+    }
 
 		function setPhaseColumns(columnCount)
 		{
