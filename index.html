@@ -454,29 +454,39 @@
 		{
 			if (this.type === "checkbox")
 			{
-          toggleClass("enable_" + this.id, this.checked);
-          toggleClass("disable_" + this.id, !this.checked);
+        toggleClass("enable_" + this.id, this.checked);
+        toggleClass("disable_" + this.id, !this.checked);
 
 				if (this.id === "slowScientists" || this.id === "smartScientists")
 				{
-            var chkSlowScientists = document.getElementById("slowScientists");
-            var chkSmartScientists = document.getElementById("smartScientists");
+          var chkSlowScientists = document.getElementById("slowScientists");
+          var chkSmartScientists = document.getElementById("smartScientists");
 
-            chkSlowScientists.disabled = chkSmartScientists.checked;
-            chkSmartScientists.disabled = chkSlowScientists.checked;
+          chkSlowScientists.disabled = chkSmartScientists.checked;
+          chkSmartScientists.disabled = chkSlowScientists.checked;
 
-            if (this.id === "slowScientists")
-              changeTechCost(5 * (chkSlowScientists.checked ? 1 : -1));
+          if (this.id === "slowScientists")
+            changeTechCost(5 * (chkSlowScientists.checked ? 1 : -1));
 
 
-            if (this.id === "smartScientists")
-              changeTechCost(5 * (chkSmartScientists.checked ? -1 : 1));
-          }
+          if (this.id === "smartScientists")
+            changeTechCost(5 * (chkSmartScientists.checked ? -1 : 1));
         }
 
-        saveSetting(this);
-			
+        if (this.id === "replicatorsTechCosts" || this.id === "CETechCosts"){
+          replicatorsTectCosts = document.getElementById("replicatorsTechCosts");
+          CETechCosts = document.getElementById("CETechCosts");
+          CETechCosts.disabled = replicatorsTectCosts.checked;
+          
+          toggleElement(".tech-cost .Base", !(replicatorsTectCosts.checked || CETechCosts.checked));
+          toggleElement(".tech-cost .CE", CETechCosts.checked && !replicatorsTectCosts.checked);
+          toggleElement(".tech-cost .Replicators", replicatorsTectCosts.checked);
+        }
       }
+
+      saveSetting(this);
+    
+    }
 
 		function changeTechCost(change)
 		{
@@ -485,9 +495,6 @@
 
         for (var i = 0; i < techCosts.length; i++) {
           var subs = techCosts[i].getElementsByTagName("sub");
-
-          if (subs.length > 1)
-            console.log(subs);
 
           for (var j = 0; j < subs.length; j++)
             subs[j].innerHTML = Number(subs[j].innerHTML) + change;
@@ -554,7 +561,6 @@
         }
 
         var tableRows = table.getElementsByTagName("tr");
-        console.log(tableRows.length);
 
         var headerRow = table.getElementsByTagName("thead")[0].children[0];
 
@@ -582,31 +588,31 @@
 
 		function toggleClass(className, visible)
 		{
-        toggleElement("." + className, visible);
-      }
+      toggleElement("." + className, visible);
+    }
 
-      function toggleElement(selector, visible) {
-			if (!visible)
-			{
-          var rule = getStyleRule(selector);
-				if (rule === null) 
-				{
-					document.styleSheets[0].insertRule(selector + " { display: none; }", 0);
-				}
-          }
-			else
-			{
-          deleteStyleRule(selector);
+    function toggleElement(selector, visible) {
+      if (!visible)
+      {
+        var rule = getStyleRule(selector);
+        if (rule === null) 
+        {
+          document.styleSheets[0].insertRule(selector + " { display: none; }", 0);
         }
       }
-
-      function toggle_visibility(id) {
-        var e = document.getElementById(id);
-	      	if(e.style.display == 'block')
-	        	e.style.display = 'none';
-	       	else
-	          	e.style.display = 'block';
+      else
+      {
+        deleteStyleRule(selector);
       }
+    }
+
+    function toggle_visibility(id) {
+      var e = document.getElementById(id);
+        if(e.style.display == 'block')
+          e.style.display = 'none';
+        else
+            e.style.display = 'block';
+    }
 
 		function deleteStyleRule(selector)
 		{
@@ -668,7 +674,7 @@
         <h2>Replicators</h2>
 
         <ul>
-				<li><label><input type="checkbox" id="replicatorsTechCosts" disabled>2. Updated technology costs</label></li>
+				<li><label><input type="checkbox" id="replicatorsTechCosts">2. Updated technology costs</label></li>
 				<li><label><input type="checkbox" id="advancedConstruction">4. Advanced construction</label></li>
 				<li><label><input type="checkbox" id="resourceCards">6. Resource Cards</label></li>
 				<li><label><input type="checkbox" id="replicators">7. Replicators</label></li>
@@ -678,7 +684,7 @@
         <h2>Close Encounters</h2>
 
         <ul>
-				<li><label><input type="checkbox" id="updatedTechCosts">2. Updated technology costs</label></li>
+				<li><label><input type="checkbox" id="CETechCosts">2. Updated technology costs</label></li>
 				<li><label><input type="checkbox" id="experience">3. Ship Experience and Military Academies</label></li>
 				<li><label><input type="checkbox" id="boarding">4. Boarding and Capturing Ships</label></li>
 				<li><label><input type="checkbox" id="security">5. Security Forces</label></li>
@@ -839,12 +845,14 @@
                 <span class="tech-cost">3<sub>15</sub></span>
                 <span class="tech-cost">4<sub>20</sub></span>
 							<span class="tech-cost">5
-                  <sub class="disable_updatedTechCosts">25</sub>
-                  <sub class="enable_updatedTechCosts">20</sub>
+                  <sub class="Base">25</sub>
+                  <sub class="CE">20</sub>
+                  <sub class="Replicators">20</sub>
                 </span>
 							<span class="tech-cost">6
-                  <sub class="disable_updatedTechCosts">30</sub>
-                  <sub class="enable_updatedTechCosts">25</sub>
+                  <sub class="Base">30</sub>
+                  <sub class="CE">25</sub>
+                  <sub class="Replicators">20</sub>
                 </span>
                 <span class="tech-cost enable_titans">7<sub>30</sub></span>
               </td>
@@ -856,8 +864,9 @@
                 <span class="tech-cost">1<sub>20</sub></span>
                 <span class="tech-cost">2<sub>30</sub></span>
 							  <span class="tech-cost">3
-                  <sub class="disable_updatedTechCosts">40</sub>
-                  <sub class="enable_updatedTechCosts">30</sub>
+                  <sub class="Base">40</sub>
+                  <sub class="CE">30</sub>
+                  <sub class="Replicators">25</sub>
                 </span>
                 <span class="tech-cost enable_advancedConstruction">4<sub>10</sub></span>
               </td>
@@ -869,8 +878,9 @@
                 <span class="tech-cost">1<sub>20</sub></span>
                 <span class="tech-cost">2<sub>30</sub></span>
 							<span class="tech-cost">3
-                  <sub class="disable_updatedTechCosts">40</sub>
-                  <sub class="enable_updatedTechCosts">30</sub>
+                  <sub class="Base">40</sub>
+                  <sub class="CE">30</sub>
+                  <sub class="Replicators">25</sub>
                 </span>
               </td>
             </tr>
@@ -880,12 +890,14 @@
               <td>
                 <span class="tech-cost">1<sub>15</sub></span>
 							<span class="tech-cost">2
-                  <sub class="disable_updatedTechCosts">20</sub>
-                  <sub class="enable_updatedTechCosts">15</sub>
+                  <sub class="Base">20</sub>
+                  <sub class="CE">15</sub>
+                  <sub class="Replicators">15</sub>
                 </span>
 							<span class="tech-cost">3
-                  <sub class="disable_updatedTechCosts">30</sub>
-                  <sub class="enable_updatedTechCosts">20</sub>
+                  <sub class="Base">30</sub>
+                  <sub class="CE">20</sub>
+                  <sub class="Replicators">15</sub>
                 </span>
               </td>
             </tr>
@@ -895,20 +907,24 @@
               <td>
                 <span class="tech-cost">2<sub>20</sub></span>
 							<span class="tech-cost">3
-                  <sub class="disable_updatedTechCosts">30</sub>
-                  <sub class="enable_updatedTechCosts">25</sub>
+                  <sub class="Base">30</sub>
+                  <sub class="CE">25</sub>
+                  <sub class="Replicators">25</sub>
                 </span>
 							<span class="tech-cost">4
-                  <sub class="disable_updatedTechCosts">40</sub>
-                  <sub class="enable_updatedTechCosts">25</sub>
+                  <sub class="Base">40</sub>
+                  <sub class="CE">25</sub>
+                  <sub class="Replicators">25</sub>
                 </span>
 							<span class="tech-cost">5
-                  <sub class="disable_updatedTechCosts">40</sub>
-                  <sub class="enable_updatedTechCosts">25</sub>
+                  <sub class="Base">40</sub>
+                  <sub class="CE">25</sub>
+                  <sub class="Replicators">25</sub>
                 </span>
 							<span class="tech-cost">6
-                  <sub class="disable_updatedTechCosts">40</sub>
-                  <sub class="enable_updatedTechCosts">20</sub>
+                  <sub class="Base">40</sub>
+                  <sub class="CE">20</sub>
+                  <sub class="Replicators">20</sub>
                 </span>
                 <span class="tech-cost enable_movement">7<sub>20</sub></span>
               </td>
@@ -918,8 +934,16 @@
               <td>0</td>
               <td>
                 <span class="tech-cost">1<sub>25</sub></span>
-                <span class="tech-cost">2<sub>30</sub></span>
-                <span class="tech-cost">3<sub>40</sub></span>
+                <span class="tech-cost">2
+                  <sub class="Base">30</sub>
+                  <sub class="CE">30</sub>
+                  <sub class="Replicators">25</sub>
+                </span>
+                <span class="tech-cost">3
+                  <sub class="Base">40</sub>
+                  <sub class="CE">40</sub>
+                  <sub class="Replicators">25</sub>
+                </span>
                 <span class="tech-cost enable_advancedConstruction">4<sub>25</sub></span>
               </td>
             </tr>
@@ -928,8 +952,16 @@
               <td>0</td>
               <td>
                 <span class="tech-cost">1<sub>20</sub></span>
-                <span class="tech-cost">2<sub>25</sub></span>
-                <span class="tech-cost">3<sub>30</sub></span>
+                <span class="tech-cost">2
+                  <sub class="Base">25</sub>
+                  <sub class="CE">25</sub>
+                  <sub class="Replicators">20</sub>
+                </span>
+                <span class="tech-cost">3
+                  <sub class="Base">30</sub>
+                  <sub class="CE">30</sub>
+                  <sub class="Replicators">20</sub>
+                </span>
               </td>
             </tr>
         </table>
@@ -947,7 +979,11 @@
               <td>1</td>
               <td>
                 <span class="tech-cost">2<sub>20</sub></span>
-                <span class="tech-cost">3<sub>30</sub></span>
+                <span class="tech-cost">3                  
+                  <sub class="Base">30</sub>
+                  <sub class="CE">30</sub>
+                  <sub class="Replicators">25</sub>
+                </span>
               </td>
             </tr>
             <tr class="enable_groundCombat">
@@ -963,8 +999,9 @@
               <td>0</td>
               <td>
 							<span class="tech-cost">1
-                  <sub class="disable_updatedTechCosts">25</sub>
-                  <sub class="enable_updatedTechCosts">20</sub>
+                  <sub class="Base">25</sub>
+                  <sub class="CE">20</sub>
+                  <sub class="Replicators">20</sub>
                 </span>
 							<span class="tech-cost enable_terraformingNebulae">2<sub>25</sub></span>
                 <span class="miners enable_terraformingNebulae">1 2 3 4</span>
@@ -975,7 +1012,11 @@
               <td>0</td>
               <td>
                 <span class="tech-cost">1<sub>30</sub></span>
-                <span class="tech-cost">2<sub>40</sub></span>
+                <span class="tech-cost">2
+                  <sub class="Base">40</sub>
+                  <sub class="CE">40</sub>
+                  <sub class="Replicators">30</sub>
+                </span>
               </td>
             </tr>
             <tr class="enable_cloaking">
@@ -983,7 +1024,11 @@
               <td>0</td>
               <td>
                 <span class="tech-cost">1<sub>20</sub></span>
-                <span class="tech-cost">2<sub>30</sub></span>
+                <span class="tech-cost">2
+                  <sub class="Base">30</sub>
+                  <sub class="CE">30</sub>
+                  <sub class="Replicators">20</sub>
+                </span>
               </td>
             </tr>
             <tr class="enable_mines">
@@ -992,8 +1037,9 @@
               <td>
                 <span class="tech-cost">1<sub>10</sub></span>
 							<span class="tech-cost">2
-                  <sub class="disable_updatedTechCosts">20</sub>
-                  <sub class="enable_updatedTechCosts">15</sub>
+                  <sub class="Base">20</sub>
+                  <sub class="CE">15</sub>
+                  <sub class="Replicators">15</sub>
                 </span>
 							<span class="tech-cost enable_mineSweeper3">3<sub>20</sub></span>
               </td>
@@ -1053,7 +1099,7 @@
               <td>0</td>
               <td>
                 <span class="tech-cost">1<sub>15</sub></span>
-							<span class="tech-cost enable_reactionMovement">2<sub>15</sub></span>
+							  <span class="tech-cost enable_reactionMovement">2<sub>15</sub></span>
               </td>
             </tr>
             <tr class="enable_fastBC">
@@ -1069,8 +1115,9 @@
               <td>0</td>
               <td>
 							<span class="tech-cost">1
-                  <sub class="disable_updatedTechCosts">20</sub>
-                  <sub class="enable_updatedTechCosts">30</sub>
+                  <sub class="Base">20</sub>
+                  <sub class="CE">30</sub>
+                  <sub class="Replicators">30</sub>
                 </span>
               </td>
             </tr>
