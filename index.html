@@ -1,174 +1,202 @@
 <!DOCTYPE html>
 <html lang="en" moznomarginboxes="">
-<head>
-	<title>Space Empires Production Sheet Generator</title>
-	<meta charset="utf-8"/>
+  <head>
+    <title>Space Empires Production Sheet Generator</title>
+    <meta charset="utf-8" />
 
 
-	<style type="text/css">
+    <style type="text/css">
 	
-		body {
-			font-family: sans-serif;
-			font-size: 10pt;
-			margin: 0.5em;
-		}
+      body {
+        font-family: sans-serif;
+        font-size: 10pt;
+        margin: 0.5em;
+      }
 
-		h1{
-			font-style: italic;
-			margin: 0.5em 0 0 0;
-			padding: 0;
-			text-align: center;
-			font-size: 150%;
-		}
+      h1 {
+        font-style: italic;
+        margin: 0.5em 0 0 0;
+        padding: 0;
+        text-align: center;
+        font-size: 150%;
+      }
 
-		h2{
-			font-style: italic;
-			margin: 0.5em 0 0 0;
-			padding: 0;
-			font-size: 110%;
-		}
+      h2 {
+        font-style: italic;
+        margin: 0.5em 0 0 0;
+        padding: 0;
+        font-size: 110%;
+      }
 
-		li {
-			list-style-type: none;
-		}
+      li {
+        list-style-type: none;
+      }
 
-		label{
-			cursor: pointer;
-		}
+      label {
+        cursor: pointer;
+      }
 
-		table {
-			border-collapse: collapse;
-		}
+      table {
+        border-collapse: collapse;
+      }
 
-		input#menuBtn{
-			position: absolute;
-			left: 0.5em;
-			top: 0.5em;
-			width: 4em;
-			border: solid 0.2em black;
-			border-radius: 0.4em; 	
-			background-color: transparent;
-			font-weight: bold;
-			cursor: pointer;
-		}
-		input#menuBtn:hover {
-			background-color: black;
-			color: white;
-		}
-		#setup {
-			position: absolute;
-			top: 0.5em;
-			left: 5em;
-			background-color: white;
-			display: none;
+      input#menuBtn {
+        position: absolute;
+        left: 0.5em;
+        top: 0.5em;
+        width: 4em;
+        border: solid 0.2em black;
+        border-radius: 0.4em;
+        background-color: transparent;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      input#menuBtn:hover {
+        background-color: black;
+        color: white;
+      }
+      #setup {
+        position: absolute;
+        top: 0.5em;
+        left: 5em;
+        background-color: white;
+        display: none;
 
-			padding: 0.5em;
-			border: solid 0.2em black;
-			border-radius: 0.4em;
-		}
+        padding: 0.5em;
+        border: solid 0.2em black;
+        border-radius: 0.4em;
+      }
 
-		#setup h1 {
-			margin: 0 0 0.5em 0;
-			border-bottom: solid thin black;
-		}
+      #setup h1 {
+        margin: 0 0 0.5em 0;
+        border-bottom: solid thin black;
+      }
 
-		#setup input[type="checkbox"] {			
-			margin-left: 0;
-		}
+      #setup input[type="checkbox"] {
+        margin-left: 0;
+      }
 
-		#setup .setupColumn{
-			float: left;
-			margin-right: 3em;
-		}
+      #setup .setupColumn {
+        float: left;
+        margin-right: 3em;
+      }
 
-		#setup ul {
-			padding-left: 1em;
-		}
+      #setup ul {
+        padding-left: 1em;
+      }
 
-		table#productionSheet{
-			width: 100%;
-		}
+      table#productionSheet {
+        table-layout: fixed;
+        width: 100%;
+        min-height: 40em;
+      }
 
-		table.technologyProgression{
-			width: 33%;
-			float: left;
-		}
+      table.technologyProgression {
+        width: 33%;
+        float: left;
+      }
 
-		table.technologyProgression:nth-of-type(1),
-		table.technologyProgression:nth-of-type(2){
-			margin-right: 0.5%;
-		}
+      table.technologyProgression:nth-of-type(1),
+      table.technologyProgression:nth-of-type(2) {
+        margin-right: 0.5%;
+      }
 
-		table.technologyProgression td{			
-			height: 1em;
-		}
+      table.technologyProgression td {
+        height: 1em;
+      }
 
-		#shipTechnologySheet h1 {
-			clear: both;
-		}
-		table.technologySheet{
-			width: 50%;
-			float: left;
-		}
-		
-		tbody{
-			border-left: solid thick black;
-			border-right: solid thick black;
-			border-bottom: solid thick black;
-		}
+      #shipTechnologySheet h1 {
+        clear: both;
+      }
+      table.technologySheet {
+        width: 50%;
+        float: left;
+      }
 
-		th, td {
-			border: solid thin black;
-			font-style: italic;
-			padding: 0 0.5em;
-			font-weight: bold;
-		}
+      tbody {
+        border-left: none;
+        border-right: none;
+        border-bottom: solid thick black;
+      }
 
-		th{
-			text-align: right;
-		}	
+      tr {
+        border-left: solid thick black;
+        border-right: solid thick black;
+      }
 
-		td sub,
-		th sub {
-			font-weight: normal;
-			font-size: 66%;
-		}
+      tr.divider {
+        border-left: none;
+        border-right: none;
+        border-top: solid thick black;
+        border-bottom: solid thick black;
+      }
 
-		th.group{
-			width: 1em;
-			max-width: 1em;
-			padding: 0 0.1em;
-			transform: translate(0, 1.5em) rotate(270deg);
-		}
+      tr.divider td {
+        border: none;
+      }
 
-		th.description{
-			width: 11em;
-		}
+      th,
+      td {
+        border: solid thin black;
+        font-style: italic;
+        padding: 0 0.5em;
+        font-weight: bold;
+      }
 
-		thead{
-			border: solid thick black;
-			border-bottom-width: medium;
-			font-size: 110%;
-		}
+      th {
+        text-align: right;
+      }
 
-		table#productionSheet th:nth-of-type(1),
-		table.technologyProgression td,
-		table.technologyProgression th
-		{
-			border-right-width: medium;
-		}
+      td sub,
+      th sub {
+        font-weight: normal;
+        font-size: 66%;
+      }
 
-		table.technologyProgression th,
-		table.technologyProgression td:nth-of-type(2),
-		table.technologySheet th{
-			text-align: center;
-		}
+      th.group {
+        width: 1em;
+        max-width: 1em;
+        padding: 0 0.1em;
+        transform: translate(0, 1.5em) rotate(270deg);
+      }
 
-		/*table.technologySheet {
+      th.description {
+        width: 11em;
+      }
+
+      thead {
+        border: solid thick black;
+        border-bottom-width: medium;
+        font-size: 110%;
+      }
+
+      table#productionSheet tr.shipSpending,
+      table#productionSheet tr.technologySpending {
+        height: auto;
+        vertical-align: top;
+      }
+
+      table#productionSheet tr {
+        height: 1em;
+      }
+
+      table#productionSheet th:nth-of-type(1),
+      table.technologyProgression td,
+      table.technologyProgression th {
+        border-right-width: medium;
+      }
+
+      table.technologyProgression th,
+      table.technologyProgression td:nth-of-type(2),
+      table.technologySheet th {
+        text-align: center;
+      }
+
+      /*table.technologySheet {
 			border: solid thick black;
 		}*/
 
-		/*table.technologySheet th{
+      /*table.technologySheet th{
 
 			border-top: solid thick black;
 			border-bottom: solid medium black;
@@ -183,351 +211,351 @@
 			font-size: 110%;
 		}*/
 
-		table.technologySheet tbody {
-			border-bottom-width: thin;
-		}
+      table.technologySheet tbody {
+        border-bottom-width: thin;
+      }
 
-		/*table.technologySheet tbody:nth-child(odd){
+      /*table.technologySheet tbody:nth-child(odd){
 			background-color: #eee;
 		}*/
 
-		th.phase { 
-			text-align: center;
-			padding: 0;
-			margin: 0;
-		}
+      th.phase {
+        text-align: center;
+        padding: 0;
+        margin: 0;
+      }
 
-		tbody.divider{
-			border-right: none;
-			border-left: none;
-		}
+      tbody.divider {
+        border-right: none;
+        border-left: none;
+      }
 
-		tbody.divider tr td{
-			height: 0.4em;
-			border: none;
-		}
-		tr.sum {
-			background-color: #eee;		
-		}
+      tbody.divider tr td {
+        height: 0.4em;
+        border: none;
+      }
+      tr.sum {
+        background-color: #eee;
+      }
 
-		tr.header th{
-			text-align: left;
-			font-size: 110%;
-		}
+      tr.header th {
+        text-align: left;
+        font-size: 110%;
+      }
 
-		tr.carry-over th{
-			text-align: left;
-		}
+      tr.carry-over th {
+        text-align: left;
+      }
 
-		tbody.research{
-			margin-top: 1em;
-		}
+      tbody.research {
+        margin-top: 1em;
+      }
 
-		.tech-cost{
-			margin-right: 0.5em;
-		}
+      .tech-cost {
+        margin-right: 0.5em;
+      }
 
-		.miners{
-			font-weight: normal;
-			margin-left: 1em;
-			font-size: 66%;
-		}
-	
-		@media print {
-			@page{
-				height: 100%;
-				margin: 1em;
-				padding: 0em;
-				size: auto landscape;
-			}
-			#setup,
-			#menuBtn {
-				display:none;
-			}
+      .miners {
+        font-weight: normal;
+        margin-left: 1em;
+        font-size: 66%;
+      }
+
+      @media print {
+        @page {
+          height: 100%;
+          margin: 1em;
+          padding: 0em;
+          size: auto landscape;
+        }
+        #setup,
+        #menuBtn {
+          display: none;
+        }
 
 			html,body{
-				margin: 0;
-				padding: 0;
-				width: 100%;
-				height: 100%;
-			}
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          height: 100%;
+        }
 
-			h1:nth-of-type(1){
-				margin-top:0;
-				padding-top: 0;
-			}
+        h1:nth-of-type(1) {
+          margin-top: 0;
+          padding-top: 0;
+        }
 
-			#productionSheetAndTech{
-				/*width: 100%;
+        #productionSheetAndTech {
+          /*width: 100%;
 				height: 100%;*/
-  				page-break-after:always; 
-			}
+          page-break-after: always;
+        }
 
-			table#productionSheet{
-				height: 100%;
-				width: 100%;
-			}
+        table#productionSheet {
+          height: 100%;
+          width: 100%;
+        }
 
-			tr {
-				height: 1em;
-			}
+        tr {
+          height: 1em;
+        }
 
-			tr.shipSpending,
-			tr.technologySpending{
-				height: auto;
-				vertical-align: top;
-			}
+        tr.shipSpending,
+        tr.technologySpending {
+          height: auto;
+          vertical-align: top;
+        }
 
-			div.flexbox{
-				box-sizing: border-box;
-				width: 100%;
-				height: 100%;
-				display: flex;
-				flex-direction: column;
-			}
+        div.flexbox {
+          box-sizing: border-box;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
 
-			div.flex{
-				flex: 1;
-				display:flex;
-				flex-direction:column;
+        div.flex {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
 
-			}
+        }
 			div.flex-child
 			{
-				flex: 1;
-  				height: 100%;
-  				position: relative;
-			}
+          flex: 1;
+          height: 100%;
+          position: relative;
+        }
 
 			div.flex-content
 			{
-				height: 100%;
-				width: 100%;
-				position: absolute;
-			}
+          height: 100%;
+          width: 100%;
+          position: absolute;
+        }
 
-			div#techContainer {
-				height: auto;
-				width: 100%;
-			}
-		}
+        div#techContainer {
+          height: auto;
+          width: 100%;
+        }
+      }
 
-	</style>
-	<script type="text/javascript">
+    </style>
+    <script type="text/javascript">
 
-		var firstPhaseColumn = 1;
-		var isIE = !!navigator.userAgent.match(/Trident/);
+      var firstPhaseColumn = 1;
+      var isIE = !!navigator.userAgent.match(/Trident/);
 
 		function init()
 		{
-			setPhaseColumns(20);
-			var phaseColumnsSlider = document.getElementById("phaseColumns");
-			phaseColumnsSlider.value = 20;
+        setPhaseColumns(20);
+        var phaseColumnsSlider = document.getElementById("phaseColumns");
+        phaseColumnsSlider.value = 20;
 
-			var setup = document.getElementById("setup");
-			var inputs = setup.getElementsByTagName("input");
-			var menuBtn = document.getElementById("menuBtn");
+        var setup = document.getElementById("setup");
+        var inputs = setup.getElementsByTagName("input");
+        var menuBtn = document.getElementById("menuBtn");
 
-			loadSettings(inputs);
+        loadSettings(inputs);
 
-			// Event handlers
+        // Event handlers
 			for (var i = 0; i < inputs.length; i++)
 			{
-				var input = inputs[i];
+          var input = inputs[i];
 				if (input.id)
 				{
-					input.addEventListener("click", inputClicked); 
-				}
-			}
+            input.addEventListener("click", inputClicked);
+          }
+        }
 
-			document.addEventListener("click", function(event) {
-				if(!(setup.contains(event.target) || event.target === menuBtn))
+        document.addEventListener("click", function (event) {
+          if (!(setup.contains(event.target) || event.target === menuBtn))
 					setup.style.display = 'none'
-			});
+        });
 
 			menuBtn.addEventListener("click", function()
 			{
-				toggle_visibility("setup");
-			});
-			
+          toggle_visibility("setup");
+        });
+
 			phaseColumnsSlider.addEventListener(isIE ? "change" : "input", function() 
 			{ 
-				setPhaseColumns(parseInt(phaseColumnsSlider.value)); 
+            setPhaseColumns(parseInt(phaseColumnsSlider.value));
 			});
 
-			var sheet = document.getElementById("");
+        var sheet = document.getElementById("");
 
-			setupShipGroups();
+        setupShipGroups();
 
-		}
+      }
 
 		function loadSettings(inputs) 
 		{
 			for (var i = 0; i < inputs.length; i++)
 			{
-				var input = inputs[i];
-				loadSetting(input);
+          var input = inputs[i];
+          loadSetting(input);
 
-				if (input.type === "checkbox") {
-					inputClicked.call(input);
-				}
+          if (input.type === "checkbox") {
+            inputClicked.call(input);
+          }
 
-				if (input.id === "phaseColumns") {
-					setPhaseColumns(input.value);
-				}
-			}
-		}
+          if (input.id === "phaseColumns") {
+            setPhaseColumns(input.value);
+          }
+        }
+      }
 
-		function loadSetting(input){
+      function loadSetting(input) {
 			if (!input.id)
 				return;
 
-			var storageId = "se4x:" + input.id;
+        var storageId = "se4x:" + input.id;
 
-			var value  = localStorage.getItem(storageId);
-			if (value) {
-				if (input.type === "checkbox") {
-					input.checked = value === "true";
-				}
+        var value = localStorage.getItem(storageId);
+        if (value) {
+          if (input.type === "checkbox") {
+            input.checked = value === "true";
+          }
 
-				if (input.type === "range"){
-					input.value = value;
-				}
-			}
-		}
+          if (input.type === "range") {
+            input.value = value;
+          }
+        }
+      }
 
-		function saveSettings(){
-			//TODO
-		}
+      function saveSettings() {
+        //TODO
+      }
 
-		function saveSetting(input){
+      function saveSetting(input) {
 			if (!input.id)
 				return;
 
-			var storageId = "se4x:" + input.id;
+        var storageId = "se4x:" + input.id;
 
-			if (input.type === "checkbox") {
-				localStorage.setItem(storageId, input.checked);
-			}
+        if (input.type === "checkbox") {
+          localStorage.setItem(storageId, input.checked);
+        }
 
-			if (input.type === "range"){
-				localStorage.setItem(storageId, input.value);
-			}
-		}
+        if (input.type === "range") {
+          localStorage.setItem(storageId, input.value);
+        }
+      }
 
 		function inputClicked()
 		{
 			if (this.type === "checkbox")
 			{
-				toggleClass("enable_" + this.id, this.checked);
-				toggleClass("disable_" + this.id, !this.checked);
+          toggleClass("enable_" + this.id, this.checked);
+          toggleClass("disable_" + this.id, !this.checked);
 
 				if (this.id === "slowScientists" || this.id === "smartScientists")
 				{
-					var chkSlowScientists = document.getElementById("slowScientists");
-					var chkSmartScientists = document.getElementById("smartScientists");
+            var chkSlowScientists = document.getElementById("slowScientists");
+            var chkSmartScientists = document.getElementById("smartScientists");
 
-					chkSlowScientists.disabled = chkSmartScientists.checked;
-					chkSmartScientists.disabled = chkSlowScientists.checked;
+            chkSlowScientists.disabled = chkSmartScientists.checked;
+            chkSmartScientists.disabled = chkSlowScientists.checked;
 
-					if (this.id === "slowScientists")
-						changeTechCost(5 * (chkSlowScientists.checked ? 1 : -1));
+            if (this.id === "slowScientists")
+              changeTechCost(5 * (chkSlowScientists.checked ? 1 : -1));
 
 
-					if (this.id === "smartScientists")
-						changeTechCost(5 * (chkSmartScientists.checked ? -1 : 1));
-				}
-			}
+            if (this.id === "smartScientists")
+              changeTechCost(5 * (chkSmartScientists.checked ? -1 : 1));
+          }
+        }
 
-			saveSetting(this);
+        saveSetting(this);
 			
-		}
+      }
 
 		function changeTechCost(change)
 		{
-			var tech = document.getElementById("techContainer");
-			var techCosts = tech.getElementsByClassName("tech-cost");
-			
-			for (var i = 0; i < techCosts.length; i++){
-				var sub = techCosts[i].getElementsByTagName("sub")[0];
-				sub.innerHTML = Number(sub.innerHTML) + change;
+        var tech = document.getElementById("techContainer");
+        var techCosts = tech.getElementsByClassName("tech-cost");
+
+        for (var i = 0; i < techCosts.length; i++) {
+          var sub = techCosts[i].getElementsByTagName("sub")[0];
+          sub.innerHTML = Number(sub.innerHTML) + change;
 			};
-		}
+      }
 
 		function setPhaseColumns(columnCount)
 		{
-			document.getElementById("phaseColumnCount").innerHTML = columnCount;
-			var sheet = document.getElementById("productionSheet");
-			var currentPhaseCount = sheet.rows[0].cells.length - firstPhaseColumn;
+        document.getElementById("phaseColumnCount").innerHTML = columnCount;
+        var sheet = document.getElementById("productionSheet");
+        var currentPhaseCount = sheet.rows[0].cells.length - firstPhaseColumn;
 
 			if (columnCount != currentPhaseCount)
 			{
 				for (var i = 0; i < sheet.rows.length; i++)
 				{
-					var row = sheet.rows[i];
+            var row = sheet.rows[i];
 
-					if (columnCount > currentPhaseCount){
+            if (columnCount > currentPhaseCount) {
 						for (var c = currentPhaseCount + 1; c <= columnCount; c++)
 						{
-							if (i == 0) {
-								var th = document.createElement("th");
-								th.className = "phase";
-								th.innerHTML = c;
-								row.appendChild(th);
+                if (i == 0) {
+                  var th = document.createElement("th");
+                  th.className = "phase";
+                  th.innerHTML = c;
+                  row.appendChild(th);
 							}
 							else{
-								row.insertCell(-1);
-							}
-						}
-					}
+                  row.insertCell(-1);
+                }
+              }
+            }
 
 					if (columnCount < currentPhaseCount)
 					{
 						for (var c = currentPhaseCount; c > columnCount; c--)
 						{
-							row.deleteCell(row.cells.length - 1);
-						}
-					}				
-				}
-			}
-		}
+                row.deleteCell(row.cells.length - 1);
+              }
+            }
+          }
+        }
+      }
 
-		function setupShipGroups(){
-			var shipTechSheet = document.getElementById("shipTechnologySheet");
-			var table = shipTechSheet.getElementsByClassName("technologySheet")[0]; //TODO: multiple tables?
-			var shipTypes = table.getElementsByTagName("tbody");
+      function setupShipGroups() {
+        var shipTechSheet = document.getElementById("shipTechnologySheet");
+        var table = shipTechSheet.getElementsByClassName("technologySheet")[0]; //TODO: multiple tables?
+        var shipTypes = table.getElementsByTagName("tbody");
 
 			for (var i = 0; i < shipTypes.length; i++)
 			{
-				var shipType = shipTypes[i];
-				var rows = shipType.getElementsByTagName("tr");
-				var template = rows[rows.length - 1];
-				var t = template.getElementsByTagName("td")[0].innerHTML;			
-				var match = t.match(/(.*#)(\d*)/); 
+          var shipType = shipTypes[i];
+          var rows = shipType.getElementsByTagName("tr");
+          var template = rows[rows.length - 1];
+          var t = template.getElementsByTagName("td")[0].innerHTML;
+          var match = t.match(/(.*#)(\d*)/);
 
-				if (match)
-					for(var n = 1; n < match[2]; n++){
-						var newNode = template.cloneNode(true);
-						newNode.getElementsByTagName("td")[0].innerHTML = match[1] + n;
-						shipType.insertBefore(newNode, template);
-					}
-			}
+          if (match)
+            for (var n = 1; n < match[2]; n++) {
+              var newNode = template.cloneNode(true);
+              newNode.getElementsByTagName("td")[0].innerHTML = match[1] + n;
+              shipType.insertBefore(newNode, template);
+            }
+        }
 
-			var tableRows = table.getElementsByTagName("tr");
-			console.log(tableRows.length);
+        var tableRows = table.getElementsByTagName("tr");
+        console.log(tableRows.length);
 
-			var headerRow = table.getElementsByTagName("thead")[0].children[0];
+        var headerRow = table.getElementsByTagName("thead")[0].children[0];
 
 			var middleRow = tableRows[(tableRows.length / 2)];
-			//middleRow.parentNode.insertBefore(headerRow.cloneNode(true), middleRow);
+        //middleRow.parentNode.insertBefore(headerRow.cloneNode(true), middleRow);
 
 			for (var r = tableRows.length / 2; r < tableRows.length; r++){
 
 			}
 
-		}
+      }
 
-		/*function changeTag(element, tagname)
+      /*function changeTag(element, tagname)
 		{
 			var newElement = document.createElement(tagname);
 
@@ -542,93 +570,93 @@
 
 		function toggleClass(className, visible)
 		{
-			toggleElement("." + className, visible);
-		}
+        toggleElement("." + className, visible);
+      }
 
-		function toggleElement(selector, visible){
+      function toggleElement(selector, visible) {
 			if (!visible)
 			{
-				var rule = getStyleRule(selector);
+          var rule = getStyleRule(selector);
 				if (rule === null) 
 				{
 					document.styleSheets[0].insertRule(selector + " { display: none; }", 0);
 				}
-			}
+          }
 			else
 			{
-				deleteStyleRule(selector);
-			}
-		}
+          deleteStyleRule(selector);
+        }
+      }
 
-		function toggle_visibility(id) {
-	       	var e = document.getElementById(id);
+      function toggle_visibility(id) {
+        var e = document.getElementById(id);
 	      	if(e.style.display == 'block')
 	        	e.style.display = 'none';
 	       	else
 	          	e.style.display = 'block';
-	    }
+      }
 
 		function deleteStyleRule(selector)
 		{
-			var rules = document.styleSheets[0].cssRules;
+        var rules = document.styleSheets[0].cssRules;
 			for (var i = 0; i < rules.length; i++)
 			{
 				if (rules[i].selectorText == selector)
 				{
-					document.styleSheets[0].deleteRule(i);
-					return true;
-				}
-			}
-			return false;
-		}
+            document.styleSheets[0].deleteRule(i);
+            return true;
+          }
+        }
+        return false;
+      }
 
 		function getStyleRule(selector)
 		{
-			var rules = document.styleSheets[0].cssRules;
+        var rules = document.styleSheets[0].cssRules;
 			for (var i = 0; i < rules.length; i++)
 			{
 				if (rules[i].selectorText == selector)
 					return rules[i];
-			}
-			return null;
-		}
-	</script>
-</head>
-<body onload="init()">
-	<input id="menuBtn" type="button" value="Menu"/>
-	<div id="setup">
+        }
+        return null;
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <input id="menuBtn" type="button" value="Menu" />
+    <div id="setup">
 
-		<h1>Select advanced and optional rules</h1>
-		<div class="setupColumn">
-			<h2>Page setup</h2>
+      <h1>Select advanced and optional rules</h1>
+      <div class="setupColumn">
+        <h2>Page setup</h2>
 
-			<ul>
-				<!--<li>
+        <ul>
+          <!--<li>
 					<label><input id="orientationPortrait" name="orientation" type="radio" value="portrait">Portrait</label>
 					<label><input id="orientationLandscape" name="orientation" type="radio" value="portrait" checked>Landscape</label>
 				</li>-->
-				<li>
+          <li>
 					<label>Economic Phase columns: <input type="range" id="phaseColumns" min="10" max="30" /></label>
-					<output for="phaseColumns" id="phaseColumnCount"></output>
-				</li>
-				<li>
+            <output for="phaseColumns" id="phaseColumnCount"></output>
+          </li>
+          <li>
 					<label><input type="checkbox" id="maintenanceChanges">Show rows for maintenance inrease/decrease</label>
-				</li>
-			</ul>
+          </li>
+        </ul>
 
-			<h2>Base game</h2>
+        <h2>Base game</h2>
 
-			<ul>
+        <ul>
 				<li><label><input type="checkbox" id="msPipelines">10. Merchant Ship Pipelines</label></li>
 				<li><label><input type="checkbox" id="carriers">11. Carriers, Fighters &amp; Point Defense</label></li>
 				<li><label><input type="checkbox" id="cloaking">12. Raiders: Cloaking and Scanners</label></li>
 				<li><label><input type="checkbox" id="mines">13. Mines and Mine Sweepers</label></li>
-			</ul>
-		</div>
-		<div class="setupColumn">
-			<h2>Close Encounters</h2>
+        </ul>
+      </div>
+      <div class="setupColumn">
+        <h2>Close Encounters</h2>
 
-			<ul>
+        <ul>
 				<li><label><input type="checkbox" id="updatedTechCosts">2. Updated technology costs</label></li>
 				<li><label><input type="checkbox" id="experience">3. Ship Experience and Military Academies</label></li>
 				<li><label><input type="checkbox" id="boarding">4. Boarding and Capturing Ships</label></li>
@@ -645,581 +673,576 @@
 				<li><label><input type="checkbox" id="uniqueShips">19. Unique Ships</label></li>
 				<li><label><input type="checkbox" id="slowScientists">20. Slow Scientists</label></li>
 				<li><label><input type="checkbox" id="smartScientists">20. Smart Scientists</label></li>
-				<!--li><label><input type="checkbox" disabled>20. Bloody Combat</label></li-->
-			</ul>
-		</div>
-	</div>
+          <!--li><label><input type="checkbox" disabled>20. Bloody Combat</label></li-->
+        </ul>
+      </div>
+    </div>
 
-	<div id="productionSheetAndTech" class="flexbox">		
-		<div class="flex">
-			<h1>Space Empires Production Sheet</h1>
-			<div class="flex-child">
-				<div class="flex-content">
-					<table id="productionSheet">
-						<thead>
-							<tr>
-								<!--<th class="group" rowspan="17">Production</th>-->
-								<th class="description">Economic Phase</th>
-								<th class="phase">1</th>
-							</tr>
-						</thead>
-						<tbody class="production">
-							<tr class="carry-over">
-								<th>Carry over from last turn</th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>+ Colony CPs</th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>+ Mineral CPs</th>
-								<td></td>
-							</tr>
-							<tr class="enable_msPipelines">
-								<th>+ MS Pipeline CPs</th>
-								<td></td>
-							</tr>
-							<tr class="enable_researchCenters">
-								<th>+ Industrial Center CPs</th>
-								<td></td>
-							</tr>
-							<tr class="sum header">
-								<th>Total CP</th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>- Maintenance</th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>- Turn order bid</th>
-								<td></td>
-							</tr>
-							<tr class="enable_researchCenters">
-								<th>&le; 15 CP converted to RP</th>
-								<td></td>
-							</tr>
-							<tr class="header">
-								<th>Subtotal</th>
-								<td></td>
-							</tr>
-							<tr class="disable_researchCenters technologySpending">
-								<th>- Technology spending</th>
-								<td></td>
-							</tr>
-							<tr class="disable_researchCenters shipSpending">
-								<th>- Ship spending</th>
-								<td></td>
-							</tr>
-							<tr class="enable_researchCenters shipSpending">
-								<th>- Purchases</th>
-								<td></td>
-							</tr>
-							<tr class="sum header">
-								<th>Remaining CP</th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>CP spent on upgrades</th>
-								<td></td>
-							</tr>
-							<tr class="enable_maintenanceChanges">
-								<th>Maint. Increase (buys)</th>
-								<td></td>
-							</tr>
-							<tr class="enable_maintenanceChanges">
-								<th>Maint. Decrease (losses)</th>
-								<td></td>
-							</tr>
-						</tbody>
+    <div id="productionSheetAndTech" class="flexbox">
+      <div class="flex">
+        <h1>Space Empires Production Sheet</h1>
+        <div class="flex-child">
+          <div class="flex-content">
+            <table id="productionSheet">
+              <thead>
+                <tr>
+                  <!--<th class="group" rowspan="17">Production</th>-->
+                  <th class="description">Economic Phase</th>
+                  <th class="phase">1</th>
+                </tr>
+              </thead>
+              <tbody class="production">
+                <tr class="carry-over">
+                  <th>Carry over from last turn</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>+ Colony CPs</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>+ Mineral CPs</th>
+                  <td></td>
+                </tr>
+                <tr class="enable_msPipelines">
+                  <th>+ MS Pipeline CPs</th>
+                  <td></td>
+                </tr>
+                <tr class="enable_researchCenters">
+                  <th>+ Industrial Center CPs</th>
+                  <td></td>
+                </tr>
+                <tr class="sum header">
+                  <th>Total CP</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>- Maintenance</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>- Turn order bid</th>
+                  <td></td>
+                </tr>
+                <tr class="enable_researchCenters">
+                  <th>&le; 15 CP converted to RP</th>
+                  <td></td>
+                </tr>
+                <tr class="header">
+                  <th>Subtotal</th>
+                  <td></td>
+                </tr>
+                <tr class="disable_researchCenters technologySpending">
+                  <th>- Technology spending</th>
+                  <td></td>
+                </tr>
+                <tr class="disable_researchCenters shipSpending">
+                  <th>- Ship spending</th>
+                  <td></td>
+                </tr>
+                <tr class="enable_researchCenters shipSpending">
+                  <th>- Purchases</th>
+                  <td></td>
+                </tr>
+                <tr class="sum header">
+                  <th>Remaining CP</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>CP spent on upgrades</th>
+                  <td></td>
+                </tr>
+                <tr class="enable_maintenanceChanges">
+                  <th>Maint. Increase (buys)</th>
+                  <td></td>
+                </tr>
+                <tr class="enable_maintenanceChanges">
+                  <th>Maint. Decrease (losses)</th>
+                  <td></td>
+                </tr>
+				
+                <tr class="divider enable_researchCenters">
+                  <td></td>
+                  <td></td>
+                </tr>
 
-						<tbody class="divider enable_researchCenters">
-							<tr>
-								<td></td>
-								<td></td>
-							</tr>
-						</tbody>
+                <tr class="carry-over enable_researchCenters">
+                  <!--<th class="group" rowspan="6">Research</th>-->
+                  <th>Carry over from last turn</th>
+                  <td></td>
+                </tr>
+                <tr class="enable_researchCenters">
+                  <th>+ Research Center RPs</th>
+                  <td></td>
+                </tr>
+                <tr class="enable_researchCenters">
+                  <th>&le; 15 CP converted to RP</th>
+                  <td></td>
+                </tr>
+                <tr class="sum header enable_researchCenters">
+                  <th>Total RP</th>
+                  <td></td>
+                </tr>
+                <tr class="technologySpending enable_researchCenters">
+                  <th>- Technology spending</th>
+                  <td></td>
+                </tr>
+                <tr class="sum header enable_researchCenters">
+                  <th>Remaining RP</th>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-						<tbody class="research enable_researchCenters">
-							
-							<tr class="carry-over">
-								<!--<th class="group" rowspan="6">Research</th>-->
-								<th>Carry over from last turn</th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>+ Research Center RPs</th>
-								<td></td>
-							</tr>
-							<tr>
-								<th>&le; 15 CP converted to RP</th>
-								<td></td>
-							</tr>
-							<tr class="sum header">
-								<th>Total RP</th>
-								<td></td>
-							</tr>
-							<tr class="technologySpending">
-								<th>- Technology spending</th>
-								<td></td>
-							</tr>
-							<tr class="sum header">
-								<th>Remaining RP</th>
-								<td></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	
-		<div id="techContainer">
+      <div id="techContainer">
 			<h1>Technology Progression &mdash; Circle numbers as technology is purchased</h1>
-			<table class="technologyProgression">
-				<thead>
-					<tr>
-						<th>Tech</th>
-						<th>Start</th>
-						<th>Level<sub>Cost</sub></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Ship Size</td>
-						<td>1</td>
-						<td>
-							<span class="tech-cost">2<sub>10</sub></span>
-							<span class="tech-cost">3<sub>15</sub></span>
-							<span class="tech-cost">4<sub>20</sub></span>
+        <table class="technologyProgression">
+          <thead>
+            <tr>
+              <th>Tech</th>
+              <th>Start</th>
+              <th>Level<sub>Cost</sub></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ship Size</td>
+              <td>1</td>
+              <td>
+                <span class="tech-cost">2<sub>10</sub></span>
+                <span class="tech-cost">3<sub>15</sub></span>
+                <span class="tech-cost">4<sub>20</sub></span>
 							<span class="tech-cost">5
-								<sub class="disable_updatedTechCosts">25</sub>
-								<sub class="enable_updatedTechCosts">20</sub>
-							</span>
+                  <sub class="disable_updatedTechCosts">25</sub>
+                  <sub class="enable_updatedTechCosts">20</sub>
+                </span>
 							<span class="tech-cost">6
-								<sub class="disable_updatedTechCosts">30</sub>
-								<sub class="enable_updatedTechCosts">25</sub>
-							</span>
-							<span class="tech-cost enable_titans">7<sub>30</sub></span>
-						</td>
-					</tr>
-					<tr>
-						<td>Attack</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>20</sub></span>
-							<span class="tech-cost">2<sub>30</sub></span>
+                  <sub class="disable_updatedTechCosts">30</sub>
+                  <sub class="enable_updatedTechCosts">25</sub>
+                </span>
+                <span class="tech-cost enable_titans">7<sub>30</sub></span>
+              </td>
+            </tr>
+            <tr>
+              <td>Attack</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>20</sub></span>
+                <span class="tech-cost">2<sub>30</sub></span>
 							<span class="tech-cost">3
-								<sub class="disable_updatedTechCosts">40</sub>
-								<sub class="enable_updatedTechCosts">30</sub>
-							</span>
-						</td>
-					</tr>
-					<tr>
-						<td>Defense</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>20</sub></span>
-							<span class="tech-cost">2<sub>30</sub></span>
+                  <sub class="disable_updatedTechCosts">40</sub>
+                  <sub class="enable_updatedTechCosts">30</sub>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>Defense</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>20</sub></span>
+                <span class="tech-cost">2<sub>30</sub></span>
 							<span class="tech-cost">3
-								<sub class="disable_updatedTechCosts">40</sub>
-								<sub class="enable_updatedTechCosts">30</sub>
-							</span>
-						</td>
-					</tr>
-					<tr>
-						<td>Tactics</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>15</sub></span>
+                  <sub class="disable_updatedTechCosts">40</sub>
+                  <sub class="enable_updatedTechCosts">30</sub>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>Tactics</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>15</sub></span>
 							<span class="tech-cost">2
-								<sub class="disable_updatedTechCosts">20</sub>
-								<sub class="enable_updatedTechCosts">15</sub>
-							</span>
+                  <sub class="disable_updatedTechCosts">20</sub>
+                  <sub class="enable_updatedTechCosts">15</sub>
+                </span>
 							<span class="tech-cost">3
-								<sub class="disable_updatedTechCosts">30</sub>
-								<sub class="enable_updatedTechCosts">20</sub>
-							</span>
-						</td>
-					</tr>
-					<tr>
-						<td>Move</td>
-						<td>1</td>
-						<td>
-							<span class="tech-cost">2<sub>20</sub></span>
+                  <sub class="disable_updatedTechCosts">30</sub>
+                  <sub class="enable_updatedTechCosts">20</sub>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>Move</td>
+              <td>1</td>
+              <td>
+                <span class="tech-cost">2<sub>20</sub></span>
 							<span class="tech-cost">3
-								<sub class="disable_updatedTechCosts">30</sub>
-								<sub class="enable_updatedTechCosts">25</sub>
-							</span>
+                  <sub class="disable_updatedTechCosts">30</sub>
+                  <sub class="enable_updatedTechCosts">25</sub>
+                </span>
 							<span class="tech-cost">4
-								<sub class="disable_updatedTechCosts">40</sub>
-								<sub class="enable_updatedTechCosts">25</sub>
-							</span>
+                  <sub class="disable_updatedTechCosts">40</sub>
+                  <sub class="enable_updatedTechCosts">25</sub>
+                </span>
 							<span class="tech-cost">5
-								<sub class="disable_updatedTechCosts">40</sub>
-								<sub class="enable_updatedTechCosts">25</sub>
-							</span>
+                  <sub class="disable_updatedTechCosts">40</sub>
+                  <sub class="enable_updatedTechCosts">25</sub>
+                </span>
 							<span class="tech-cost">6
-								<sub class="disable_updatedTechCosts">40</sub>
-								<sub class="enable_updatedTechCosts">20</sub>
-							</span>
-							<span class="tech-cost enable_movement">7<sub>20</sub></span>
-						</td>
-					</tr>
-					<tr>
-						<td>Ship Yard</td>
-						<td>1</td>
-						<td>
-							<span class="tech-cost">2<sub>20</sub></span>
-							<span class="tech-cost">3<sub>30</sub></span>
-						</td>
-					</tr>
-					<tr class="enable_groundCombat">
-						<td>Ground</td>
-						<td>1</td>
-						<td>
-							<span class="tech-cost">2<sub>10</sub></span>
-							<span class="tech-cost">3<sub>15</sub></span>
-						</td>
-					</tr>
-				</table>
-				<table class="technologyProgression">
-				<thead>
-					<tr>
-						<th>Tech</th>
-						<th>Start</th>
-						<th>Level<sub>Cost</sub></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="enable_carriers">
-						<td>Fighters</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>25</sub></span>
-							<span class="tech-cost">2<sub>30</sub></span>
-							<span class="tech-cost">3<sub>40</sub></span>
-						</td>
-					</tr>
-					<tr class="enable_carriers">
-						<td>Point Def.</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>20</sub></span>
-							<span class="tech-cost">2<sub>25</sub></span>
-							<span class="tech-cost">3<sub>30</sub></span>
-						</td>
-					</tr>
-					<tr>
-						<td>Terraforming</td>
-						<td>0</td>
-						<td>
+                  <sub class="disable_updatedTechCosts">40</sub>
+                  <sub class="enable_updatedTechCosts">20</sub>
+                </span>
+                <span class="tech-cost enable_movement">7<sub>20</sub></span>
+              </td>
+            </tr>
+            <tr>
+              <td>Ship Yard</td>
+              <td>1</td>
+              <td>
+                <span class="tech-cost">2<sub>20</sub></span>
+                <span class="tech-cost">3<sub>30</sub></span>
+              </td>
+            </tr>
+            <tr class="enable_groundCombat">
+              <td>Ground</td>
+              <td>1</td>
+              <td>
+                <span class="tech-cost">2<sub>10</sub></span>
+                <span class="tech-cost">3<sub>15</sub></span>
+              </td>
+            </tr>
+        </table>
+        <table class="technologyProgression">
+          <thead>
+            <tr>
+              <th>Tech</th>
+              <th>Start</th>
+              <th>Level<sub>Cost</sub></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="enable_carriers">
+              <td>Fighters</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>25</sub></span>
+                <span class="tech-cost">2<sub>30</sub></span>
+                <span class="tech-cost">3<sub>40</sub></span>
+              </td>
+            </tr>
+            <tr class="enable_carriers">
+              <td>Point Def.</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>20</sub></span>
+                <span class="tech-cost">2<sub>25</sub></span>
+                <span class="tech-cost">3<sub>30</sub></span>
+              </td>
+            </tr>
+            <tr>
+              <td>Terraforming</td>
+              <td>0</td>
+              <td>
 							<span class="tech-cost">1
-								<sub class="disable_updatedTechCosts">25</sub>
-								<sub class="enable_updatedTechCosts">20</sub>
-							</span>
+                  <sub class="disable_updatedTechCosts">25</sub>
+                  <sub class="enable_updatedTechCosts">20</sub>
+                </span>
 							<span class="tech-cost enable_terraformingNebulae">2<sub>25</sub></span>
-							<span class="miners enable_terraformingNebulae">1 2 3 4</span>
-						</td>
-					</tr>
-					<tr class="enable_cloaking">
-						<td>Cloaking</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>30</sub></span>
-							<span class="tech-cost">2<sub>40</sub></span>
-						</td>
-					</tr>
-					<tr class="enable_cloaking">
-						<td>Scanners</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>20</sub></span>
-							<span class="tech-cost">2<sub>30</sub></span>
-						</td>
-					</tr>
-					<tr class="enable_mines">
-						<td>Mines</td>
-						<td>0</td>
-						<td>
+                <span class="miners enable_terraformingNebulae">1 2 3 4</span>
+              </td>
+            </tr>
+            <tr class="enable_cloaking">
+              <td>Cloaking</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>30</sub></span>
+                <span class="tech-cost">2<sub>40</sub></span>
+              </td>
+            </tr>
+            <tr class="enable_cloaking">
+              <td>Scanners</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>20</sub></span>
+                <span class="tech-cost">2<sub>30</sub></span>
+              </td>
+            </tr>
+            <tr class="enable_mines">
+              <td>Mines</td>
+              <td>0</td>
+              <td>
 							<span class="tech-cost">1
-								<sub class="disable_updatedTechCosts">20</sub>
-								<sub class="enable_updatedTechCosts">30</sub>
-							</span>
-						</td>
-					</tr>
-					<tr class="enable_mines">
-						<td>Mine Sweeper</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>10</sub></span>
+                  <sub class="disable_updatedTechCosts">20</sub>
+                  <sub class="enable_updatedTechCosts">30</sub>
+                </span>
+              </td>
+            </tr>
+            <tr class="enable_mines">
+              <td>Mine Sweeper</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>10</sub></span>
 							<span class="tech-cost">2
-								<sub class="disable_updatedTechCosts">20</sub>
-								<sub class="enable_updatedTechCosts">15</sub>
-							</span>
+                  <sub class="disable_updatedTechCosts">20</sub>
+                  <sub class="enable_updatedTechCosts">15</sub>
+                </span>
 							<span class="tech-cost enable_mineSweeper3">3<sub>20</sub></span>
-						</td>
-					</tr>
-				</table>
-				<table class="technologyProgression">
-				<thead>
-					<tr>
-						<th>Tech</th>
-						<th>Start</th>
-						<th>Level<sub>Cost</sub></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="enable_experience">
-						<td>Military Acad.</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>10</sub></span>
-							<span class="tech-cost">2<sub>20</sub></span>
-						</td>
-					</tr>
-					<tr class="enable_boarding">
-						<td>Boarding</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>20</sub></span>
-							<span class="tech-cost">2<sub>25</sub></span>
-						</td>
-					</tr>
-					<tr class="enable_security">
-						<td>Security</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>15</sub></span>
-							<span class="tech-cost">2<sub>15</sub></span>
-						</td>
-					</tr>
-					<tr>
-						<td>Exploration</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>15</sub></span>
+              </td>
+            </tr>
+        </table>
+        <table class="technologyProgression">
+          <thead>
+            <tr>
+              <th>Tech</th>
+              <th>Start</th>
+              <th>Level<sub>Cost</sub></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="enable_experience">
+              <td>Military Acad.</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>10</sub></span>
+                <span class="tech-cost">2<sub>20</sub></span>
+              </td>
+            </tr>
+            <tr class="enable_boarding">
+              <td>Boarding</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>20</sub></span>
+                <span class="tech-cost">2<sub>25</sub></span>
+              </td>
+            </tr>
+            <tr class="enable_security">
+              <td>Security</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>15</sub></span>
+                <span class="tech-cost">2<sub>15</sub></span>
+              </td>
+            </tr>
+            <tr>
+              <td>Exploration</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>15</sub></span>
 							<span class="tech-cost enable_reactionMovement">2<sub>15</sub></span>
-						</td>
-					</tr>
-					<tr class="enable_fastBC">
-						<td>Fast BC</td>
-						<td>0</td>
-						<td>
-							<span class="tech-cost">1<sub>10</sub></span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<div id="shipTechnologySheet">
+              </td>
+            </tr>
+            <tr class="enable_fastBC">
+              <td>Fast BC</td>
+              <td>0</td>
+              <td>
+                <span class="tech-cost">1<sub>10</sub></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="shipTechnologySheet">
 		<h1>Ship Technology Sheet (Circle the Current Technology Level when the Group is built)</h1>
-		<div id="technologySheetContainer">
-			<table id="technologySheet1" class="technologySheet">
-				<thead>
-					<tr>
-						<th>Grp</th>
-						<th>Att</th>
-						<th>Def</th>
-						<th>Tactics</th>
-						<th>Move</th>
-						<th>Other</th>
-						<th class="enable_experience">Exp.</th>
-					</tr>
-				</thead>
-				<tbody class="enable_flagships">
-					<tr>
-						<td>FLAG</td>
-						<td>1 2 3</td>
-						<td>1 2 3</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td>E: 1 2 F: 1</td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr>
-						<td>DD #6</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td>Scan: 1 2</td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr>
-						<td>CA #6</td>
-						<td>1 2</td>
-						<td>1 2</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td>Exp: 1 2</td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr>
-						<td>BC #6</td>
-						<td>1 2</td>
-						<td>1 2</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td><span class="enable_fastBC">Fast: 1</span></td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr>
-						<td>BB #6</td>
-						<td>1 2 3</td>
-						<td>1 2 3</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td></td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr>
-						<td>DN #5</td>
-						<td>1 2 3</td>
-						<td>1 2 3</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td></td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody class="enable_titans">
-					<tr>
-						<td>TN #5</td>
-						<td>1 2 3</td>
-						<td>1 2 3</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td>FTR: 1-3</td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody class="enable_uniqueShips">
+      <div id="technologySheetContainer">
+        <table id="technologySheet1" class="technologySheet">
+          <thead>
+            <tr>
+              <th>Grp</th>
+              <th>Att</th>
+              <th>Def</th>
+              <th>Tactics</th>
+              <th>Move</th>
+              <th>Other</th>
+              <th class="enable_experience">Exp.</th>
+            </tr>
+          </thead>
+          <tbody class="enable_flagships">
+            <tr>
+              <td>FLAG</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td>E: 1 2 F: 1</td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>DD #6</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td>Scan: 1 2</td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>CA #6</td>
+              <td>1 2</td>
+              <td>1 2</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td>Exp: 1 2</td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>BC #6</td>
+              <td>1 2</td>
+              <td>1 2</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td><span class="enable_fastBC">Fast: 1</span></td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>BB #6</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td></td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>DN #5</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td></td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody class="enable_titans">
+            <tr>
+              <td>TN #5</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td>FTR: 1-3</td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody class="enable_uniqueShips">
 					<tr class='uniqueDesign'>
 						<td colspan='2'>Name: </td>
 						<td colspan='2'>Stats: </td>
 						<td colspan='1'>Cost:</td>
 						<td colspan='2'>Specials:</td>
-					</tr>
-					<tr>
-						<td>UN #6</td>
-						<td>1 2 3</td>
-						<td>1 2 3</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td></td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody class="enable_cloaking">
-					<tr>
-						<td>R #6</td>
-						<td>1 2</td>
-						<td>1 2</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td>Cloak: 2</td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr>
-						<td>SC #6</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td>PD: 1 2 3</td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody class="enable_carriers">
-					<tr>
-						<td>F #10</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1 2 3</td>
-						<td></td>
-						<td>FTR: 2 3</td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody class="enable_carriers">
-					<tr>
-						<td>CV #6</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td></td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody class="enable_mines">
-					<tr>
-						<td>SW #5</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td>SW: 2 <span class="enable_mineSweeper3">3</span></td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody class="enable_boarding">
-					<tr>
-						<td>BD #6</td>
-						<td></td>
-						<td>1 2</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td>BD: 2</td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<tbody class="enable_groundCombat">
-					<tr>
-						<td>T #6</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1 2 3</td>
-						<td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-						<td>Grnd: 3</td>
-						<td class="enable_experience">S V E L</td>
-					</tr>
-				</tbody>
-				<!--tbody>
+            </tr>
+            <tr>
+              <td>UN #6</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td></td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody class="enable_cloaking">
+            <tr>
+              <td>R #6</td>
+              <td>1 2</td>
+              <td>1 2</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td>Cloak: 2</td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>SC #6</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td>PD: 1 2 3</td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody class="enable_carriers">
+            <tr>
+              <td>F #10</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1 2 3</td>
+              <td></td>
+              <td>FTR: 2 3</td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody class="enable_carriers">
+            <tr>
+              <td>CV #6</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td></td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody class="enable_mines">
+            <tr>
+              <td>SW #5</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td>SW: 2 <span class="enable_mineSweeper3">3</span></td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody class="enable_boarding">
+            <tr>
+              <td>BD #6</td>
+              <td></td>
+              <td>1 2</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td>BD: 2</td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <tbody class="enable_groundCombat">
+            <tr>
+              <td>T #6</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td>Grnd: 3</td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
+          <!--tbody>
 					<tr>
 						<td colspan="7">When an "R" appears for Move Tech, read it as the appropriate number. The R is just a reminder that the group gains the React ability at that Move Technology. </td>
 					</tr>
 				</tbody-->
-			</table>
-			<table id="technologySheet1" class="technologySheet">
-				<thead>
-					<tr>
-						<th>Grp</th>
-						<th>Att</th>
-						<th>Def</th>
-						<th>Tactics</th>
-						<th>Move</th>
-						<th>Other</th>
-						<th>Exp.</th>
-					</tr>
-				</thead>
-			</table>
-		</div>
-	</div>
-</body>
+        </table>
+        <table id="technologySheet1" class="technologySheet">
+          <thead>
+            <tr>
+              <th>Grp</th>
+              <th>Att</th>
+              <th>Def</th>
+              <th>Tactics</th>
+              <th>Move</th>
+              <th>Other</th>
+              <th>Exp.</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </body>
 
 </html>
