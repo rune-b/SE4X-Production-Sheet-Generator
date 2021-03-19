@@ -109,19 +109,31 @@
         height: 1em;
       }
 
-      #shipTechnologySheet{
-        display: none;
+
+    div#technologySheetContainer{
+      column-count: 2;
+      column-gap: 0;
+      column-rule: solid thick black;;
+      border: solid thick black;
+      font-size: 8pt;
+    }
+
+      table.technologySheet {
+        width: 100%;
+        border: none;
       }
 
-      #shipTechnologySheet h1 {
-        clear: both;
-      }
-      table.technologySheet {
-        width: 50%;
-        float: left;
+      table.technologySheet tbody::after{
+        content: ''; 
+        display: block;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        
       }
 
       tbody {
+        break-inside: avoid;
+        page-break-inside: avoid;
         border-left: none;
         border-right: none;
         border-bottom: solid thick black;
@@ -205,32 +217,37 @@
         text-align: center;
       }
 
-      /*table.technologySheet {
-			border: solid thick black;
-		}*/
+      
+        #shipTechnologySheet {
+          break-before: always;
+          page-break-before: always;
+          clear:both;
+        }
 
-      /*table.technologySheet th{
-
-			border-top: solid thick black;
-			border-bottom: solid medium black;
-		
-		}
-
+    
 		table.technologySheet thead{
-			font-size: 100%;
+			border: none;
 		}
 
 		table.technologySheet th{
-			font-size: 110%;
-		}*/
+      border-top: none;
+			
+		}
+		table.technologySheet td{
+			
+			border: solid thin black;
+		}
+		table.technologySheet tr{
+			border: none;
+		}
 
       table.technologySheet tbody {
-        border-bottom-width: thin;
+        border: none;
       }
 
-      /*table.technologySheet tbody:nth-child(odd){
-			background-color: #eee;
-		}*/
+      /* table.technologySheet tbody:nth-child(odd) {
+        background-color: #ddd;;
+      } */
 
       th.phase {
         text-align: center;
@@ -299,9 +316,6 @@
           padding-top: 0;
         }
 
-        #productionSheetAndTech {
-          page-break-after: always;
-        }
 
         tr {
           height: 1em;
@@ -544,8 +558,8 @@
         var table = shipTechSheet.getElementsByClassName("technologySheet")[0]; //TODO: multiple tables?
         var shipTypes = table.getElementsByTagName("tbody");
 
-			for (var i = 0; i < shipTypes.length; i++)
-			{
+        for (var i = 0; i < shipTypes.length; i++)
+        {
           var shipType = shipTypes[i];
           var rows = shipType.getElementsByTagName("tr");
           var template = rows[rows.length - 1];
@@ -564,12 +578,12 @@
 
         var headerRow = table.getElementsByTagName("thead")[0].children[0];
 
-			var middleRow = tableRows[(tableRows.length / 2)];
-        //middleRow.parentNode.insertBefore(headerRow.cloneNode(true), middleRow);
+        var middleRow = tableRows[(tableRows.length / 2)];
+          //middleRow.parentNode.insertBefore(headerRow.cloneNode(true), middleRow);
 
-			for (var r = tableRows.length / 2; r < tableRows.length; r++){
+        for (var r = tableRows.length / 2; r < tableRows.length; r++){
 
-			}
+        }
 
       }
 
@@ -971,6 +985,8 @@
               </td>
             </tr>
         </table>
+
+
         <table class="technologyProgression">
           <thead>
             <tr>
@@ -1145,6 +1161,8 @@
         </table>
       </div>
     </div>
+
+
     <div id="shipTechnologySheet">
 		<h1>Ship Technology Sheet (Circle the Current Technology Level when the Group is built)</h1>
       <div id="technologySheetContainer">
@@ -1174,11 +1192,11 @@
           <tbody>
             <tr>
               <td>DD #6</td>
-              <td>1</td>
-              <td>1</td>
+              <td>1 <span class="enable_advancedConstruction">X:2</span></td>
+              <td>1 <span class="enable_advancedConstruction">X:2</span></td>
               <td>1 2 3</td>
               <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-              <td>Scan: 1 2</td>
+              <td>Scan: 1 2 <span class="enable_advancedConstruction">F:2</span></td>
               <td class="enable_experience">S V E L</td>
             </tr>
           </tbody>
@@ -1238,11 +1256,11 @@
             </tr>
           </tbody>
           <tbody class="enable_uniqueShips">
-					<tr class='uniqueDesign'>
-						<td colspan='2'>Name: </td>
-						<td colspan='2'>Stats: </td>
-						<td colspan='1'>Cost:</td>
-						<td colspan='2'>Specials:</td>
+					  <tr class='uniqueDesign'>
+              <td colspan='2'>Name: </td>
+              <td colspan='2'>Stats: </td>
+              <td colspan='1'>Cost:</td>
+              <td colspan='2'>Specials:</td>
             </tr>
             <tr>
               <td>UN #6</td>
@@ -1267,7 +1285,7 @@
           </tbody>
           <tbody>
             <tr>
-              <td>SC #6</td>
+              <td>SC #7X</td>
               <td>1</td>
               <td>1</td>
               <td>1 2 3</td>
@@ -1298,9 +1316,20 @@
               <td class="enable_experience">S V E L</td>
             </tr>
           </tbody>
+          <tbody class="enable_advancedConstruction">
+            <tr>
+              <td>BV #6</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>1 2 3</td>
+              <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
+              <td>Fast: 2</td>
+              <td class="enable_experience">S V E L</td>
+            </tr>
+          </tbody>
           <tbody class="enable_mines">
             <tr>
-              <td>SW #5</td>
+              <td>SW #6</td>
               <td>1</td>
               <td>1</td>
               <td>1 2 3</td>
@@ -1331,24 +1360,11 @@
               <td class="enable_experience">S V E L</td>
             </tr>
           </tbody>
-          <!--tbody>
-					<tr>
-						<td colspan="7">When an "R" appears for Move Tech, read it as the appropriate number. The R is just a reminder that the group gains the React ability at that Move Technology. </td>
-					</tr>
-				</tbody-->
-        </table>
-        <table id="technologySheet1" class="technologySheet">
-          <thead>
+          <tbody>
             <tr>
-              <th>Grp</th>
-              <th>Att</th>
-              <th>Def</th>
-              <th>Tactics</th>
-              <th>Move</th>
-              <th>Other</th>
-              <th>Exp.</th>
+              <td colspan="7">When an "R" appears for Move Tech, read it as the appropriate number. The R is just a reminder that the group gains the React ability at that Move Technology. </td>
             </tr>
-          </thead>
+          </tbody>
         </table>
       </div>
     </div>
