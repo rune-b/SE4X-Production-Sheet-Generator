@@ -669,6 +669,12 @@
 				<li><label><input type="checkbox" id="carriers">11. Carriers, Fighters &amp; Point Defense</label></li>
 				<li><label><input type="checkbox" id="cloaking">12. Raiders: Cloaking and Scanners</label></li>
 				<li><label><input type="checkbox" id="mines">13. Mines and Mine Sweepers</label></li>
+				<li><label><input type="checkbox" id="instantUpgrades">15.1. Instant Technology Upgrade</label></li>
+        </ul>
+
+        <h2>Special Scenario Rules</h2>
+        <ul>
+				<li><label><input type="checkbox" id="noMaintenance">No Maintenance</label></li>
         </ul>
 
         <h2>Replicators</h2>
@@ -745,7 +751,7 @@
                   <th>Total CP</th>
                   <td></td>
                 </tr>
-                <tr>
+                <tr class="disable_noMaintenance">
                   <th>- Maintenance</th>
                   <td></td>
                 </tr>
@@ -777,15 +783,15 @@
                   <th>Remaining CP</th>
                   <td></td>
                 </tr>
-                <tr>
+                <tr class="disable_instantUpgrades">
                   <th>CP spent on upgrades</th>
                   <td></td>
                 </tr>
-                <tr class="enable_maintenanceChanges">
+                <tr class="enable_maintenanceChanges disable_noMaintenance">
                   <th>Maint. Increase (buys)</th>
                   <td></td>
                 </tr>
-                <tr class="enable_maintenanceChanges">
+                <tr class="enable_maintenanceChanges disable_noMaintenance">
                   <th>Maint. Decrease (losses)</th>
                   <td></td>
                 </tr>
