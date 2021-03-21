@@ -230,20 +230,24 @@
 		}
 
 		table.technologySheet th{
-      border-top: none;
-			
+      border-top: none;			
 		}
-		table.technologySheet td{
-			
+
+		table.technologySheet td{			
 			border: solid thin black;
 		}
+
+		table.technologySheet td:nth-of-type(n+2){			
+      word-spacing:0.5em;
+		}
+
 		table.technologySheet tr{
 			border: none;
 		}
 
-      table.technologySheet tbody {
-        border: none;
-      }
+    table.technologySheet tbody {
+      border: none;
+    }
 
       /* table.technologySheet tbody:nth-child(odd) {
         background-color: #ddd;;
@@ -290,6 +294,10 @@
         font-weight: normal;
         margin-left: 1em;
         font-size: 66%;
+      }
+
+      .shade {
+        background-color: #ddd;
       }
 
       /* @media screen {
@@ -500,10 +508,27 @@
           toggleElement(".tech-cost .CE", CETechCosts.checked && !replicatorsTectCosts.checked);
           toggleElement(".tech-cost .Replicators", replicatorsTectCosts.checked);
         }
+
+        updateShipSheetBackgroundColors();
       }
 
       saveSetting(this);
     
+    }
+
+
+    function updateShipSheetBackgroundColors(){
+      const table = document.getElementById("technologySheetTable");
+      const tbodies = Array.from(table.getElementsByTagName("tbody"));
+      const visibleBodies = tbodies.filter(tbody => tbody.offsetParent !== null);
+      
+      visibleBodies.forEach((tbody, index) => {
+        if (index % 2 && !tbody.classList.contains('enable_reactionMovement'))
+          tbody.classList.add("shade");
+        else
+          tbody.classList.remove("shade")
+      });
+
     }
 
 		function changeTechCost(change)
@@ -1170,7 +1195,7 @@
     <div id="shipTechnologySheet" class="page">
 		<h1>Ship Technology Sheet (Circle the Current Technology Level when the Group is built)</h1>
       <div id="technologySheetContainer">
-        <table id="technologySheet1" class="technologySheet">
+        <table id="technologySheetTable" class="technologySheet">
           <thead>
             <tr>
               <th>Grp</th>
@@ -1189,7 +1214,7 @@
               <td>1 2 3</td>
               <td>1 2 3</td>
               <td>2 3 <span class="disable_reactionMovement">4</span><span class="enable_reactionMovement">R</span> 5 6 <span class="enable_movement">7</span></td>
-              <td>E: 1 <span class="enable_reactionMovement">2</span> <span class="enable_fastBC">F: 1</span></td>
+              <td>Exp: 1 <span class="enable_reactionMovement">2</span> <span class="enable_fastBC">Fast: 1</span></td>
               <td class="enable_experience">S V E L</td>
             </tr>
           </tbody>
@@ -1200,7 +1225,7 @@
               <td>1 <span class="enable_advancedConstruction">X:2</span></td>
               <td>1 2 3</td>
               <td>2 <span class="disable_reactionMovement">3</span><span class="enable_reactionMovement">R</span> 4 5 6 <span class="enable_movement">7</span></td>
-              <td>Scan: 1 2 <span class="enable_advancedConstruction">F:2</span></td>
+              <td>Scan: 1 2 <span class="enable_advancedConstruction">Fast: 2</span></td>
               <td class="enable_experience">S V E L</td>
             </tr>
           </tbody>
@@ -1255,7 +1280,7 @@
               <td>1 2 3</td>
               <td>1 2 3</td>
               <td>2 3 4 5 6 <span class="enable_movement">7</span></td>
-              <td><span class="enable_carriers">FTR: 1-4</span></td>
+              <td><span class="enable_carriers">FTR: 1-<span class="disable_advancedConstruction">3</span><span class="enable_advancedConstruction">4</span></span></td>
               <td class="enable_experience">S V E L</td>
             </tr>
           </tbody>
@@ -1283,7 +1308,7 @@
               <td>1 2 <span class="enable_advancedConstruction">3</span></td>
               <td>1 2 3</td>
               <td>2 <span class="disable_reactionMovement">3</span><span class="enable_reactionMovement">R</span> 4 5 6 <span class="enable_movement">7</span></td>
-              <td>C:2 <span class="enable_advancedConstruction">F:2 G:3</span></td>
+              <td><span class="disable_advancedConstruction">Cloak: 2</span><span class="enable_advancedConstruction">C:2 F:2 G:3</span></td>
               <td class="enable_experience">S V E L</td>
             </tr>
           </tbody>
