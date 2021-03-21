@@ -162,7 +162,7 @@
     td {
       border: solid thin black;
       font-style: italic;
-      padding: 0 0.5em;
+      padding: 0 0.5em 0.1em 0.5em;
       font-weight: bold;
     }
 
@@ -238,6 +238,7 @@
 
     table.technologySheet td {
       border: solid thin black;
+      border-top: none;
     }
 
     table.technologySheet td:nth-of-type(n+2) {
@@ -248,8 +249,14 @@
       border: none;
     }
 
-    table.technologySheet tbody {
+    table.technologySheet tbody,
+    table.technologySheet thead {
       border: none;
+      background-color: white;
+    }
+
+    table.technologySheet tbody.shade {
+      background-color: #ddd;
     }
 
     /* table.technologySheet tbody:nth-child(odd) {
@@ -300,9 +307,6 @@
       font-size: 66%;
     }
 
-    .shade {
-      background-color: #ddd;
-    }
 
     /* @media screen {
         .page{ margin: 2em;}
@@ -698,7 +702,6 @@
         <li><label><input type="checkbox" id="uniqueShips">19. Unique Ships</label></li>
         <li><label><input type="checkbox" id="slowScientists">20. Slow Scientists</label></li>
         <li><label><input type="checkbox" id="smartScientists">20. Smart Scientists</label></li>
-        <!--li><label><input type="checkbox" disabled>20. Bloody Combat</label></li-->
       </ul>
     </div>
     <div class="setupColumn">
@@ -1235,10 +1238,7 @@
         </tbody>
         <tbody class="enable_uniqueShips">
           <tr class='uniqueDesign'>
-            <td colspan='2'>Name: </td>
-            <td colspan='2'>Stats: </td>
-            <td colspan='1'>Cost:</td>
-            <td colspan='2'>Specials:</td>
+            <td colspan='7'>Name:_____________ Stats: ___ ___-___-___ Cost: ____ Specials:</td>
           </tr>
           <tr>
             <td>UN #6</td>
