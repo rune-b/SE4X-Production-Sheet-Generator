@@ -1,4 +1,9 @@
 {
-"editor.formatOnSave": false,
-"editor.tabSize": 3
+  "editor.formatOnSave": true,
+  "html.format.wrapAttributes": "preserve",
+  "html.format.wrapLineLength": 0,
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features",
+    "editor.wordWrap": "off"
+  }
 }
