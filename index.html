@@ -593,16 +593,23 @@
       for (var i = 0; i < shipTypes.length; i++) {
         var shipType = shipTypes[i];
         var rows = shipType.getElementsByTagName("tr");
-        var template = rows[rows.length - 1];
-        var t = template.getElementsByTagName("td")[0].innerHTML;
-        var match = t.match(/(.*#)(\d*)/);
 
-        if (match)
-          for (var n = 1; n < match[2]; n++) {
-            var newNode = template.cloneNode(true);
-            newNode.getElementsByTagName("td")[0].innerHTML = match[1] + n;
-            shipType.insertBefore(newNode, template);
-          }
+        var template = Array.from(rows).find(row => {
+          let shipName = row.getElementsByTagName("td")[0].innerHTML;
+          return shipName.match(/(.*#)(\d*)$/);
+        })
+
+        if (template) {
+          var t = template.getElementsByTagName("td")[0].innerHTML;
+          var match = t.match(/(.*#)(\d*)$/);
+
+          if (match)
+            for (var n = 1; n < match[2]; n++) {
+              var newNode = template.cloneNode(true);
+              newNode.getElementsByTagName("td")[0].innerHTML = match[1] + n;
+              shipType.insertBefore(newNode, template);
+            }
+        }
       }
     }
 
@@ -1279,6 +1286,15 @@
         </tbody>
         <tbody>
           <tr>
+            <td>SC #6</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1 2 3</td>
+            <td>2 <span class="disable_reactionMovement">3</span><span class="enable_reactionMovement">R</span> 4 5 6 <span class="enable_movement">7</span></td>
+            <td>PD: 1 2 3</td>
+            <td class="enable_experience">S V E L</td>
+          </tr>
+          <tr class="enable_advancedConstruction">
             <td>SC #7X</td>
             <td>1</td>
             <td>1</td>
