@@ -7,6 +7,10 @@
 
 
   <style type="text/css">
+    :root {
+      --shade-color: rgb(200, 200, 200);
+    }
+
     body {
       -webkit-print-color-adjust: exact;
       font-family: sans-serif;
@@ -272,11 +276,11 @@
     }
 
     table.technologySheet tbody.shade {
-      background-color: #ddd;
+      background-color: var(--shade-color);
     }
 
     /* table.technologySheet tbody:nth-child(odd) {
-        background-color: #ddd;;
+        background-color: var(--shade-color);
       } */
 
     th.phase {
@@ -296,7 +300,7 @@
     }
 
     tr.sum {
-      background-color: #ddd;
+      background-color: var(--shade-color);
     }
 
     tr.header th {
@@ -408,6 +412,10 @@
       var phaseColumnsSlider = document.getElementById("phaseColumns");
       phaseColumnsSlider.value = 20;
 
+      setShadeColor(200);
+      var shadeColorSlider = document.getElementById("shadeColor");
+      shadeColorSlider.value = 200;
+
       var setup = document.getElementById("setup");
       var inputs = setup.getElementsByTagName("input");
       var menuBtn = document.getElementById("menuBtn");
@@ -435,6 +443,10 @@
         setPhaseColumns(parseInt(phaseColumnsSlider.value));
       });
 
+      shadeColorSlider.addEventListener(isIE ? "change" : "input", function () {
+        setShadeColor(parseInt(shadeColorSlider.value));
+      });
+
       var sheet = document.getElementById("");
 
       setupShipGroups();
@@ -452,6 +464,10 @@
 
         if (input.id === "phaseColumns") {
           setPhaseColumns(input.value);
+        }
+
+        if (input.id === "shadeColor") {
+          setShadeColor(input.value);
         }
       }
     }
@@ -585,6 +601,12 @@
       }
     }
 
+    function setShadeColor(value) {
+      let color = `rgb(${value}, ${value}, ${value})`;
+      deleteStyleRule(':root');
+      document.styleSheets[0].insertRule(`:root { --shade-color: ${color} }`, 0);
+    }
+
     function setupShipGroups() {
       var shipTechSheet = document.getElementById("shipTechnologySheet");
       var table = shipTechSheet.getElementsByClassName("technologySheet")[0]; //TODO: multiple tables?
@@ -675,6 +697,10 @@
         <li>
           <label>Economic Phase columns: <input type="range" id="phaseColumns" min="10" max="30" /></label>
           <output for="phaseColumns" id="phaseColumnCount"></output>
+        </li>
+        <li>
+          <label>Shade color: <input type="range" id="shadeColor" min="100" max="255" /></label>
+          <div style="display: inline-block; width: 2em; height: 1em; background-color: var(--shade-color); border: solid thin black;"></div>
         </li>
         <li>
           <label><input type="checkbox" id="maintenanceChanges">Show rows for maintenance inrease/decrease</label>
