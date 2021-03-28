@@ -253,6 +253,12 @@
       bottom: 0.1em;
     }
 
+    #growColoniesReminder span {
+      width: 33%;
+      display: inline-block;
+      text-align: center;
+      font-size: 110%;
+    }
 
     #shipTechnologySheet {
       break-before: always;
@@ -591,6 +597,11 @@
         for (var i = 0; i < sheet.rows.length; i++) {
           var row = sheet.rows[i];
 
+          if (row.id === "growColoniesReminder") {
+            row.cells[0].setAttribute("colspan", firstPhaseColumn + parseInt(columnCount));
+            continue;
+          }
+
           if (columnCount > currentPhaseCount) {
             for (var c = currentPhaseCount + 1; c <= columnCount; c++) {
               if (i == 0) {
@@ -715,9 +726,8 @@
           <label>Shade color: <input type="range" id="shadeColor" min="100" max="255" /></label>
           <div style="display: inline-block; width: 2em; height: 1em; background-color: var(--shade-color); border: solid thin black;"></div>
         </li>
-        <li>
-          <label><input type="checkbox" id="maintenanceChanges">Show rows for maintenance inrease/decrease</label>
-        </li>
+        <li><label><input type="checkbox" id="maintenanceChanges">Show rows for maintenance inrease/decrease</label></li>
+        <li><label><input type="checkbox" id="growColoniesReminder">Show <i>Grow Colonies</i> reminder</label></li>
       </ul>
 
       <h2>Base game</h2>
@@ -829,7 +839,9 @@
                 <td></td>
               </tr>
               <tr class="disable_researchCenters shipSpending">
-                <th>- Ship spending</th>
+                <th class='purchases'>- Ship spending
+                  <div class='freeTroopsReminder enable_groundCombat'>Don't forget to add free troops</div>
+                </th>
                 <td></td>
               </tr>
               <tr class="enable_researchCenters shipSpending">
@@ -884,6 +896,9 @@
               <tr class="sum header enable_researchCenters">
                 <th>Remaining RP</th>
                 <td></td>
+              </tr>
+              <tr id="growColoniesReminder" class="enable_growColoniesReminder">
+                <td colspan="1"><span>Grow Colonies</span><span>Grow Colonies</span><span>Grow Colonies</span></td>
               </tr>
             </tbody>
           </table>
